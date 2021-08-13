@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economiser/PopUps/salary_added.dart';
 import 'package:flutter/material.dart';
@@ -18,21 +17,6 @@ class _CurrentBudgetState extends State<CurrentBudget> {
   CollectionReference income = FirebaseFirestore.instance.collection('Income');
   final Stream<QuerySnapshot> _incomeStream =
       FirebaseFirestore.instance.collection('Income').snapshots();
-  Timer _timer;
-
-  @override
-  void initState() {
-    _timer = Timer.periodic(Duration(seconds: 32), (timer) {
-      setState(() {});
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,8 +76,10 @@ class _CurrentBudgetState extends State<CurrentBudget> {
                               ),
                             );
                           }
-
-                          //monthlyIncome(budgetSnapshot, income, incomeSnapshot);
+                          if (incomeSnapshot.data.docs.isNotEmpty) {
+                            monthlyIncome(
+                                budgetSnapshot, income, incomeSnapshot);
+                          }
 
                           return Text(
                             budgetSnapshot.data.docs.isNotEmpty
@@ -124,16 +110,15 @@ class _CurrentBudgetState extends State<CurrentBudget> {
     print('current date: ${Jiffy().dateTime}');
     //print(Jiffy(addingDate.toDate()).add(minutes: 28).dateTime);
     print(
-        'time left for salary date: ${Jiffy(addingDate.toDate()).add(minutes: 1).dateTime.difference(Jiffy().dateTime)}');
+        'time left for salary date: ${Jiffy(addingDate.toDate()).add(months: 1).dateTime.difference(Jiffy().dateTime)}');
 
     if (Jiffy(addingDate.toDate())
-        .add(minutes: 1)
+        .add(months: 1)
         .dateTime
         .difference(Jiffy().dateTime)
         .isNegative) {
       income.doc(incomeSnapshot.data.docs.first.id).update({
-        'monthlySalaryDate':
-            Jiffy(addingDate.toDate()).add(minutes: 1).dateTime,
+        'monthlySalaryDate': Jiffy(addingDate.toDate()).add(months: 1).dateTime,
       });
       budgetRefference.doc(budgetSnapshot.data.docs.first.id).update({
         'currentBudget':
