@@ -76,7 +76,10 @@ class _CurrentBudgetState extends State<CurrentBudget> {
                               ),
                             );
                           }
-                          if (incomeSnapshot.data.docs.isNotEmpty) {
+                          if (incomeSnapshot.data.docs.isEmpty) {
+                            print('check is successful');
+                            // if there is no income, then do not start monthly income function,
+                          } else {
                             monthlyIncome(
                                 budgetSnapshot, income, incomeSnapshot);
                           }
