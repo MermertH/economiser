@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "756010921801",
+    "project_id": "economiser-467b3",
+    "storage_bucket": "economiser-467b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:756010921801:android:36bbb36c5b595b9bcdf498",
+        "android_client_info": {
+          "package_name": "com.example.economiser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "756010921801-t4hv6qmcmcep8n13rfu8ge3hmfdtcdqc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2Obi0BeC4HvwN95XAIDenu8XDlyc7whs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "756010921801-t4hv6qmcmcep8n13rfu8ge3hmfdtcdqc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
