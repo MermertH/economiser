@@ -10,11 +10,3 @@ class Expenses {
     this.date,
   );
 }
-
-class Budget {
-  final String budget;
-  Budget(this.budget);
-  String get getBudget {
-    return budget;
-  }
-}

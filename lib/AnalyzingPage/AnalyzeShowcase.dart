@@ -18,31 +18,33 @@ class AnalyzeShowcase extends StatelessWidget {
         ),
         centerTitle: true,
         actions: [
-          Theme(
-            data: Theme.of(context).copyWith(
-                textTheme: TextTheme().apply(bodyColor: Colors.black),
-                dividerColor: Colors.amberAccent,
-                iconTheme: IconThemeData(color: Colors.black)),
-            child: PopupMenuButton<int>(
-              color: Colors.orange,
-              itemBuilder: (context) => [
-                PopupMenuItem<int>(
-                    enabled: true,
-                    value: 0,
-                    child: Center(child: Text("Week 1"))),
-                PopupMenuDivider(),
-                PopupMenuItem<int>(
-                    value: 1, child: Center(child: Text("Week 2"))),
-                PopupMenuDivider(),
-                PopupMenuItem<int>(
-                    value: 2, child: Center(child: Text("Week 3"))),
-                PopupMenuDivider(),
-                PopupMenuItem<int>(
-                    value: 3, child: Center(child: Text("Week 4"))),
-              ],
-              onSelected: null,
-            ),
-          ),
+          PopupMenuButton(
+              color: Colors.amberAccent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              onSelected: (value) {
+                if (value <= 4) {
+                  print('Week $value is selected');
+                }
+              },
+              itemBuilder: (context) {
+                return List.generate(4, (index) {
+                  return PopupMenuItem(
+                    value: index + 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: Colors.orange,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(child: Text('Week ${index + 1}')),
+                      ),
+                    ),
+                  );
+                });
+              }),
         ],
       ),
       body: Column(
@@ -86,15 +88,7 @@ class AnalyzeShowcase extends StatelessWidget {
                       color: Colors.white,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          StatusBar(),
-                          StatusBar(),
-                          StatusBar(),
-                          StatusBar(),
-                          StatusBar(),
-                          StatusBar(),
-                          StatusBar(),
-                        ],
+                        children: List.generate(7, (index) => StatusBar()),
                       ),
                     ),
                     Container(
@@ -104,15 +98,7 @@ class AnalyzeShowcase extends StatelessWidget {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CostOfDay(),
-                        CostOfDay(),
-                        CostOfDay(),
-                        CostOfDay(),
-                        CostOfDay(),
-                        CostOfDay(),
-                        CostOfDay(),
-                      ],
+                      children: List.generate(7, (index) => CostOfDay()),
                     ),
                   ],
                 ),
@@ -130,17 +116,56 @@ class AnalyzeShowcase extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextButton.icon(
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.orange[600],
-                        primary: Colors.black,
-                      ),
-                      icon: Icon(Icons.more_vert),
-                      label: Text('Days'),
-                      onPressed: () {},
+                  PopupMenuButton(
+                    offset: Offset(50, 20),
+                    color: Colors.amber[200],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
                     ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          color: Colors.orange,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Icon(
+                                Icons.more_vert,
+                                size: 30,
+                              ),
+                              Text(
+                                'Days',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    itemBuilder: (context) {
+                      return List.generate(7, (index) {
+                        return PopupMenuItem(
+                          child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14),
+                                color: Colors.orange,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Center(child: Text('day ${index + 1}')),
+                              )),
+                          value: index + 1,
+                        );
+                      });
+                    },
+                    onSelected: (value) {
+                      print('selected day is $value');
+                    },
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 25),
