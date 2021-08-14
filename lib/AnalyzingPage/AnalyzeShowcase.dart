@@ -19,6 +19,8 @@ class AnalyzeShowcase extends StatelessWidget {
         centerTitle: true,
         actions: [
           PopupMenuButton(
+              icon: Icon(Icons.calendar_view_week_rounded),
+              tooltip: 'Select Week',
               color: Colors.amberAccent,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -45,6 +47,36 @@ class AnalyzeShowcase extends StatelessWidget {
                   );
                 });
               }),
+          PopupMenuButton(
+            icon: (Icon(Icons.calendar_view_month_rounded)),
+            tooltip: 'Select Month',
+            color: Colors.amberAccent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            onSelected: (value) {
+              if (value <= 4) {
+                print('Month $value is selected');
+              }
+            },
+            itemBuilder: (context) {
+              return List.generate(6, (index) {
+                return PopupMenuItem(
+                  value: index + 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(14),
+                      color: Colors.orange,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(child: Text('Month ${index + 1}')),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
         ],
       ),
       body: Column(
