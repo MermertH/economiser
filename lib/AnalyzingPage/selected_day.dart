@@ -68,7 +68,9 @@ class _SelectedDayState extends State<SelectedDay> {
       },
       onSelected: (value) {
         print('selected day is $value');
-        widget.selectedDay(value);
+        setState(() {
+          widget.selectedDay(value);
+        });
       },
     );
   }

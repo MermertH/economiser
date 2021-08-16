@@ -20,7 +20,9 @@ class _SelectedWeekState extends State<SelectedWeek> {
         ),
         onSelected: (value) {
           print('Week $value is selected');
-          widget.selectedWeek(value);
+          setState(() {
+            widget.selectedWeek(value);
+          });
         },
         // initialValue: Jiffy().quarter,
         itemBuilder: (context) {

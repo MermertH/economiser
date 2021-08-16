@@ -21,7 +21,9 @@ class _SelectedMonthState extends State<SelectedMonth> {
       ),
       onSelected: (value) {
         print('Month $value is selected');
-        widget.selectedMonth(value);
+        setState(() {
+          widget.selectedMonth(value);
+        });
       },
       // initialValue: months.month,
       itemBuilder: (context) {

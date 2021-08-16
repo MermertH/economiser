@@ -20,21 +20,15 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
   final currentTime = DateTime.now();
 
   void currentSelectedDay(int day) {
-    setState(() {
-      selectedDay = day;
-    });
+    selectedDay = day;
   }
 
   void currentSelectedWeek(int week) {
-    setState(() {
-      selectedWeek = week;
-    });
+    selectedWeek = week;
   }
 
   void currentSelectedMonth(int month) {
-    setState(() {
-      selectedMonth = month;
-    });
+    selectedMonth = month;
   }
 
   @override
