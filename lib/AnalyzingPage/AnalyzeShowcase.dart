@@ -166,7 +166,8 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                 ),
                 child: ListView.builder(
                   itemCount: 6,
-                  itemBuilder: (context, index) => ListItems(index),
+                  itemBuilder: (context, index) => ListItems(
+                      index, selectedDay, selectedWeek, selectedMonth),
                 ),
               ),
             ),

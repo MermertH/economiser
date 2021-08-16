@@ -1,7 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class AddExpenseDialog extends StatelessWidget {
+class AddExpenseDialog extends StatefulWidget {
+  @override
+  State<AddExpenseDialog> createState() => _AddExpenseDialogState();
+}
+
+class _AddExpenseDialogState extends State<AddExpenseDialog> {
+  final Stream<QuerySnapshot> _expenseStream =
+      FirebaseFirestore.instance.collection('Expenses').snapshots();
+  final CollectionReference expenses =
+      FirebaseFirestore.instance.collection('Expenses');
   final _formKey = GlobalKey<FormState>();
+  String expenseName;
+  int expenseCost;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +94,10 @@ class AddExpenseDialog extends StatelessWidget {
                               return 'Invalid input!';
                             }
                           },
-                          onSaved: (value) {},
+                          onSaved: (value) {
+                            expenseName = value;
+                            print('expense name: $expenseName');
+                          },
                         ),
                       ),
                     ],
@@ -132,7 +147,10 @@ class AddExpenseDialog extends StatelessWidget {
                                   return 'Invalid input!';
                                 }
                               },
-                              onSaved: (value) {},
+                              onSaved: (value) {
+                                expenseCost = int.parse(value);
+                                print('expense cost: $expenseCost');
+                              },
                             ),
                           ],
                         ),
@@ -145,25 +163,37 @@ class AddExpenseDialog extends StatelessWidget {
             // cost
 
             Spacer(),
-            TextButton(
-              onPressed: () {
-                if (!_formKey.currentState.validate()) {
-                  return;
-                } else {
-                  Navigator.of(context).pop(true);
-                }
-              },
-              child: Text('Submit'),
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.amber,
-                primary: Colors.black,
-                shape: BeveledRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(14),
-                  ),
-                ),
-              ),
-            ),
+            StreamBuilder<QuerySnapshot>(
+                stream: _expenseStream,
+                builder: (context, snapshot) {
+                  return TextButton(
+                    onPressed: () {
+                      if (!_formKey.currentState.validate()) {
+                        return;
+                      } else {
+                        expenses
+                            .doc(snapshot.data.docs.first.id)
+                            .collection('Expense')
+                            .add({
+                          'expenseName': expenseName,
+                          'expenseCost': expenseCost,
+                          'addingDate': DateTime.now(),
+                        });
+                        Navigator.of(context).pop(true);
+                      }
+                    },
+                    child: Text('Submit'),
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.amber,
+                      primary: Colors.black,
+                      shape: BeveledRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(14),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
             Spacer(),
           ],
         ),

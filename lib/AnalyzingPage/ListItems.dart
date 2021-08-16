@@ -3,7 +3,11 @@ import 'package:intl/intl.dart';
 
 class ListItems extends StatelessWidget {
   final index;
-  ListItems(this.index);
+  final selectedDay;
+  final selectedWeek;
+  final selectedMonth;
+  ListItems(
+      this.index, this.selectedDay, this.selectedWeek, this.selectedMonth);
 
   @override
   Widget build(BuildContext context) {
