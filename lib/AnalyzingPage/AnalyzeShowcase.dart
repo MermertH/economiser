@@ -1,4 +1,4 @@
-import 'package:economiser/AnalyzingPage/ListItems.dart';
+
 import 'package:economiser/AnalyzingPage/cost_of_day.dart';
 import 'package:economiser/AnalyzingPage/selected_day.dart';
 import 'package:economiser/AnalyzingPage/selected_month.dart';
@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import './status_bar.dart';
+import './expense_list.dart';
 
 class AnalyzeShowcase extends StatefulWidget {
   @override
@@ -156,22 +157,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
               ),
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.amber,
-                  borderRadius: BorderRadius.all(Radius.circular(14)),
-                ),
-                child: ListView.builder(
-                  itemCount: 6,
-                  itemBuilder: (context, index) => ListItems(
-                      index, selectedDay, selectedWeek, selectedMonth),
-                ),
-              ),
-            ),
-          ),
+          ExpenseList(selectedDay,selectedWeek,selectedMonth),
         ],
       ),
     );

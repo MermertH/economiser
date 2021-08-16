@@ -6,8 +6,9 @@ class ListItems extends StatelessWidget {
   final selectedDay;
   final selectedWeek;
   final selectedMonth;
-  ListItems(
-      this.index, this.selectedDay, this.selectedWeek, this.selectedMonth);
+  final expenseData;
+  ListItems(this.index, this.selectedDay, this.selectedWeek, this.selectedMonth,
+      this.expenseData);
 
   @override
   Widget build(BuildContext context) {
