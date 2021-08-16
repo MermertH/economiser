@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 
 class SelectedMonth extends StatefulWidget {
+  final selectedMonth;
+  SelectedMonth({this.selectedMonth});
   @override
   _SelectedMonthState createState() => _SelectedMonthState();
 }
 
 class _SelectedMonthState extends State<SelectedMonth> {
-  var selectedMonth;
   final months = Jiffy();
   @override
   Widget build(BuildContext context) {
@@ -20,10 +21,7 @@ class _SelectedMonthState extends State<SelectedMonth> {
       ),
       onSelected: (value) {
         print('Month $value is selected');
-        setState(() {
-          selectedMonth = value;
-        });
-        
+        widget.selectedMonth(value);
       },
       // initialValue: months.month,
       itemBuilder: (context) {

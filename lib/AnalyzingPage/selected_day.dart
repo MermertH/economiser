@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class SelectedDay extends StatefulWidget {
+  final selectedDay;
+  SelectedDay({this.selectedDay});
   @override
   _SelectedDayState createState() => _SelectedDayState();
 }
 
 class _SelectedDayState extends State<SelectedDay> {
-  var selectedDay;
   @override
   Widget build(BuildContext context) {
     final maxHeight = MediaQuery.of(context).size.height;
@@ -60,15 +61,14 @@ class _SelectedDayState extends State<SelectedDay> {
                       child: Text(
                           '${DateFormat.E().format(weekday.subtract(Duration(days: index + 1)))}')),
                 )),
-            value: index + 1,
+            value: (index + -7)
+                .abs(), // due to reversed function, index must be reverted too.
           );
         }).reversed.toList();
       },
       onSelected: (value) {
         print('selected day is $value');
-        setState(() {
-          selectedDay = value;
-        });
+        widget.selectedDay(value);
       },
     );
   }

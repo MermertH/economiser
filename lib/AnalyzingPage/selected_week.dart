@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:jiffy/jiffy.dart';
 
 class SelectedWeek extends StatefulWidget {
+  final selectedWeek;
+  SelectedWeek({this.selectedWeek});
+
   @override
   _SelectedWeekState createState() => _SelectedWeekState();
 }
 
 class _SelectedWeekState extends State<SelectedWeek> {
-  var selectedWeek;
-
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
@@ -20,9 +20,7 @@ class _SelectedWeekState extends State<SelectedWeek> {
         ),
         onSelected: (value) {
           print('Week $value is selected');
-          setState(() {
-            selectedWeek = value;
-          });
+          widget.selectedWeek(value);
         },
         // initialValue: Jiffy().quarter,
         itemBuilder: (context) {

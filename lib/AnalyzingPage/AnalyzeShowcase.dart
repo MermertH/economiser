@@ -14,7 +14,29 @@ class AnalyzeShowcase extends StatefulWidget {
 }
 
 class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
+  var selectedDay;
+  var selectedWeek;
+  var selectedMonth;
   final currentTime = DateTime.now();
+
+  void currentSelectedDay(int day) {
+    setState(() {
+      selectedDay = day;
+    });
+  }
+
+  void currentSelectedWeek(int week) {
+    setState(() {
+      selectedWeek = week;
+    });
+  }
+
+  void currentSelectedMonth(int month) {
+    setState(() {
+      selectedMonth = month;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final maxWidth = MediaQuery.of(context).size.width;
@@ -29,8 +51,8 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
         centerTitle: true,
         actions: [
           //PopUpMenus.
-          SelectedWeek(),
-          SelectedMonth(),
+          SelectedWeek(selectedWeek: currentSelectedWeek),
+          SelectedMonth(selectedMonth: currentSelectedMonth),
         ],
       ),
       body: Column(
@@ -104,7 +126,8 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SelectedDay(),
+                  // day selection PopupMenuButton.
+                  SelectedDay(selectedDay: currentSelectedDay),
                   Padding(
                     padding: const EdgeInsets.only(right: 25),
                     child: Text(
@@ -129,6 +152,9 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                       // print('Max Height: $maxHeight');
                       // final months = Jiffy().subtract(months: 6);
                       // print('${months.add(months: 1).MMM}');
+                      print('selected day is $selectedDay');
+                      print('selected week is $selectedWeek');
+                      print('selected month is $selectedMonth');
                     },
                     child: Text('?'),
                   ),
@@ -145,7 +171,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                   borderRadius: BorderRadius.all(Radius.circular(14)),
                 ),
                 child: ListView.builder(
-                  itemCount: 1,
+                  itemCount: 6,
                   itemBuilder: (context, index) => ListItems(index),
                 ),
               ),
