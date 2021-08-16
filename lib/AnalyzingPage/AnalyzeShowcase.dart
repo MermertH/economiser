@@ -1,10 +1,20 @@
 import 'package:economiser/AnalyzingPage/ListItems.dart';
 import 'package:economiser/AnalyzingPage/cost_of_day.dart';
+import 'package:economiser/AnalyzingPage/selected_day.dart';
+import 'package:economiser/AnalyzingPage/selected_month.dart';
+import 'package:economiser/AnalyzingPage/selected_week.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import './status_bar.dart';
 
-class AnalyzeShowcase extends StatelessWidget {
+class AnalyzeShowcase extends StatefulWidget {
+  @override
+  State<AnalyzeShowcase> createState() => _AnalyzeShowcaseState();
+}
+
+class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
+  final currentTime = DateTime.now();
   @override
   Widget build(BuildContext context) {
     final maxWidth = MediaQuery.of(context).size.width;
@@ -18,65 +28,9 @@ class AnalyzeShowcase extends StatelessWidget {
         ),
         centerTitle: true,
         actions: [
-          PopupMenuButton(
-              icon: Icon(Icons.calendar_view_week_rounded),
-              tooltip: 'Select Week',
-              color: Colors.amberAccent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              onSelected: (value) {
-                if (value <= 4) {
-                  print('Week $value is selected');
-                }
-              },
-              itemBuilder: (context) {
-                return List.generate(4, (index) {
-                  return PopupMenuItem(
-                    value: index + 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        color: Colors.orange,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(child: Text('Week ${index + 1}')),
-                      ),
-                    ),
-                  );
-                });
-              }),
-          PopupMenuButton(
-            icon: (Icon(Icons.calendar_view_month_rounded)),
-            tooltip: 'Select Month',
-            color: Colors.amberAccent,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            onSelected: (value) {
-              if (value <= 4) {
-                print('Month $value is selected');
-              }
-            },
-            itemBuilder: (context) {
-              return List.generate(6, (index) {
-                return PopupMenuItem(
-                  value: index + 1,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      color: Colors.orange,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(child: Text('Month ${index + 1}')),
-                    ),
-                  ),
-                );
-              });
-            },
-          ),
+          //PopUpMenus.
+          SelectedWeek(),
+          SelectedMonth(),
         ],
       ),
       body: Column(
@@ -97,7 +51,9 @@ class AnalyzeShowcase extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(14.0),
                           child: Text(
-                            'March, Week 1',
+                            "${DateFormat.EEEE().format(currentTime)}, " +
+                                "${DateFormat.QQQ().format(currentTime)}, " +
+                                "${DateFormat.MMMM().format(currentTime)}",
                             style: TextStyle(fontSize: 18),
                           ),
                         ),
@@ -148,57 +104,7 @@ class AnalyzeShowcase extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  PopupMenuButton(
-                    offset: Offset(50, 20),
-                    color: Colors.amber[200],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          color: Colors.orange,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Icon(
-                                Icons.more_vert,
-                                size: 30,
-                              ),
-                              Text(
-                                'Days',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    itemBuilder: (context) {
-                      return List.generate(7, (index) {
-                        return PopupMenuItem(
-                          child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14),
-                                color: Colors.orange,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: Center(child: Text('day ${index + 1}')),
-                              )),
-                          value: index + 1,
-                        );
-                      });
-                    },
-                    onSelected: (value) {
-                      print('selected day is $value');
-                    },
-                  ),
+                  SelectedDay(),
                   Padding(
                     padding: const EdgeInsets.only(right: 25),
                     child: Text(
@@ -219,8 +125,10 @@ class AnalyzeShowcase extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      print('Max Width: $maxWidth');
-                      print('Max Height: $maxHeight');
+                      // print('Max Width: $maxWidth');
+                      // print('Max Height: $maxHeight');
+                      // final months = Jiffy().subtract(months: 6);
+                      // print('${months.add(months: 1).MMM}');
                     },
                     child: Text('?'),
                   ),
@@ -237,8 +145,8 @@ class AnalyzeShowcase extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(14)),
                 ),
                 child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) => ListItems(),
+                  itemCount: 1,
+                  itemBuilder: (context, index) => ListItems(index),
                 ),
               ),
             ),
