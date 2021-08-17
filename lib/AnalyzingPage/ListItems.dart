@@ -12,8 +12,34 @@ class ListItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return selectedExpenses.isNotEmpty
-        ? Card(
+    return selectedExpenses.first.id == null
+        ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 50),
+                // color: Colors.orange,
+                height: 200,
+                width: 200,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.warning,
+                      size: 60,
+                    ),
+                    Center(
+                      child: Text(
+                        'No Expense Found',
+                        style: TextStyle(color: Colors.black, fontSize: 20),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          )
+        : Card(
             margin: EdgeInsets.all(10),
             child: ListTile(
               onTap: () {
@@ -50,32 +76,6 @@ class ListItems extends StatelessWidget {
                 ),
               ),
             ),
-          )
-        : Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 50),
-                // color: Colors.orange,
-                height: 200,
-                width: 200,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.warning,
-                      size: 60,
-                    ),
-                    Center(
-                      child: Text(
-                        'No Expense Found',
-                        style: TextStyle(color: Colors.black, fontSize: 20),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
           );
   }
 }

@@ -20,7 +20,8 @@ class _ExpenseListState extends State<ExpenseList> {
       FirebaseFirestore.instance.collection('Expenses').snapshots();
   List<Expenses> currentList = [];
   final rng = new Random();
- // Timestamp desiredDate;
+  bool isSuccessful;
+  // Timestamp desiredDate;
 
   @override
   Widget build(BuildContext context) {
@@ -67,24 +68,8 @@ class _ExpenseListState extends State<ExpenseList> {
                           ),
                         );
                       }
-                        currentList = selectedExpenses(
-                            snapshot, widget.selectedDay, widget.selectedWeek);                     
-                      // print('${(snapshot.data.docs[3].get('expenseName'))}');
-                      // print('selected day is ${widget.selectedDay}');
-                      // print('selected week is ${widget.selectedWeek}');
-                      // for (int i = 0; i < snapshot.data.docs.length; i++) {
-                      //   desiredDate = snapshot.data.docs[i].get('addingDate');
-                      //   if (desiredDate.toDate().weekday ==
-                      //           widget.selectedDay &&
-                      //       DateFormat.QQQ().format(desiredDate.toDate()) ==
-                      //           widget.selectedWeek) {
-                      //     print('it is desired date $i');
-                      //   } else {
-                      //     print('it is not the desired date');
-                      //   }
-                      // }
-                      // desiredDate = snapshot.data.docs.first.get('addingDate');
-                      // print('desired date is ${desiredDate.toDate()}');
+                      currentList = selectedExpenses(
+                          snapshot, widget.selectedDay, widget.selectedWeek);
 
                       return ListView.builder(
                         itemCount: currentList.length,
@@ -103,6 +88,7 @@ class _ExpenseListState extends State<ExpenseList> {
   List<Expenses> selectedExpenses(AsyncSnapshot<QuerySnapshot<Object>> snapshot,
       int selectedDay, String selectedWeek) {
     List<Expenses> list = [];
+    isSuccessful = false;
     for (int i = 0; i < snapshot.data.docs.length; i++) {
       Timestamp addingDate = snapshot.data.docs[i].get('addingDate');
       if (addingDate.toDate().weekday == selectedDay &&
@@ -113,8 +99,26 @@ class _ExpenseListState extends State<ExpenseList> {
           title: snapshot.data.docs[i].get('expenseName'),
           id: '${rng.nextInt(999999999)}',
         ));
+        isSuccessful = true;
       }
     }
-    return list;
+    return isSuccessful ? list : [Expenses(id: null)];
   }
 }
+
+// print('${(snapshot.data.docs[3].get('expenseName'))}');
+// print('selected day is ${widget.selectedDay}');
+// print('selected week is ${widget.selectedWeek}');
+// for (int i = 0; i < snapshot.data.docs.length; i++) {
+//   desiredDate = snapshot.data.docs[i].get('addingDate');
+//   if (desiredDate.toDate().weekday ==
+//           widget.selectedDay &&
+//       DateFormat.QQQ().format(desiredDate.toDate()) ==
+//           widget.selectedWeek) {
+//     print('it is desired date $i');
+//   } else {
+//     print('it is not the desired date');
+//   }
+// }
+// desiredDate = snapshot.data.docs.first.get('addingDate');
+// print('desired date is ${desiredDate.toDate()}');
