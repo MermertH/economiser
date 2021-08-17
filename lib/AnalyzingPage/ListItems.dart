@@ -1,18 +1,57 @@
+import 'package:economiser/AnalyzingPage/expenses.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ListItems extends StatelessWidget {
-  final index;
+  final int index;
+  final List<Expenses> selectedExpenses;
   ListItems(
     this.index,
+    this.selectedExpenses,
   );
-
-  void getExpenseData() {}
 
   @override
   Widget build(BuildContext context) {
-    return index == 100
-        ? Column(
+    return selectedExpenses.isNotEmpty
+        ? Card(
+            margin: EdgeInsets.all(10),
+            child: ListTile(
+              onTap: () {
+                print('id of this expense is ${selectedExpenses[index].id}');
+              },
+              title: Text(selectedExpenses[index].title),
+              subtitle: Text(
+                  '${DateFormat("yMMMEd").format(selectedExpenses[index].date)} ${DateFormat("Hms").format(selectedExpenses[index].date)}'),
+              tileColor: Colors.white,
+              leading: CircleAvatar(
+                backgroundColor: Colors.orange,
+                foregroundColor: Colors.black,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: FittedBox(
+                    child: Text(
+                      '${index + 1}',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ),
+              ),
+              trailing: Container(
+                decoration: BoxDecoration(
+                  color: Colors.orange,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    '${selectedExpenses[index].cost}\$',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+            ),
+          )
+        : Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
@@ -37,42 +76,6 @@ class ListItems extends StatelessWidget {
                 ),
               ),
             ],
-          )
-        : Card(
-            margin: EdgeInsets.all(10),
-            child: ListTile(
-              onTap: () {},
-              title: Text('Taxes'),
-              subtitle: Text(
-                  '${DateFormat("yMMMEd").format(DateTime.now())} ${DateFormat("Hms").format(DateTime.now())}'),
-              tileColor: Colors.white,
-              leading: CircleAvatar(
-                backgroundColor: Colors.orange,
-                foregroundColor: Colors.black,
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: FittedBox(
-                    child: Text(
-                      '${index + 1}',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                ),
-              ),
-              trailing: Container(
-                decoration: BoxDecoration(
-                  color: Colors.orange,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Text(
-                    '100\$',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
-            ),
           );
   }
 }

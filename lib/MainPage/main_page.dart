@@ -49,7 +49,7 @@ class MainPage extends StatelessWidget {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text(
                                 'Income submitted successfully!',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
                                 ),
@@ -59,14 +59,14 @@ class MainPage extends StatelessWidget {
                           }
                         });
                       },
-                      child: Text('Set Income'),
+                      child: const Text('Set Income'),
                       style: TextButton.styleFrom(
                           primary: Colors.black,
                           backgroundColor: Colors.amber,
-                          shape: BeveledRectangleBorder(
+                          shape: const BeveledRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(14)),
                           ),
-                          textStyle: TextStyle(fontSize: 25),
+                          textStyle: const TextStyle(fontSize: 25),
                           fixedSize: Size(200, 50)),
                     ),
                   ),
@@ -79,7 +79,7 @@ class MainPage extends StatelessWidget {
                           .then((value) {
                         if (value == true) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(
+                            content: const Text(
                               'Budget added successfully!',
                               style: TextStyle(
                                 color: Colors.black,
@@ -91,14 +91,14 @@ class MainPage extends StatelessWidget {
                         }
                       });
                     },
-                    child: Text('Add Budget'),
+                    child: const Text('Add Budget'),
                     style: TextButton.styleFrom(
                         primary: Colors.black,
                         backgroundColor: Colors.amber,
-                        shape: BeveledRectangleBorder(
+                        shape: const BeveledRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(14)),
                         ),
-                        textStyle: TextStyle(fontSize: 25),
+                        textStyle: const TextStyle(fontSize: 25),
                         fixedSize: Size(200, 50)),
                   ),
                   //Add Expense Button
@@ -111,7 +111,7 @@ class MainPage extends StatelessWidget {
                         if (value == true) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               backgroundColor: Colors.amber,
-                              content: Text(
+                              content: const Text(
                                 'Expense submitted successfully!',
                                 style: TextStyle(
                                   color: Colors.black,
@@ -121,14 +121,14 @@ class MainPage extends StatelessWidget {
                         }
                       });
                     },
-                    child: Text('Add Expense'),
+                    child: const Text('Add Expense'),
                     style: TextButton.styleFrom(
                         primary: Colors.black,
                         backgroundColor: Colors.amber,
-                        shape: BeveledRectangleBorder(
+                        shape: const BeveledRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(14)),
                         ),
-                        textStyle: TextStyle(fontSize: 25),
+                        textStyle: const TextStyle(fontSize: 25),
                         fixedSize: Size(200, 50)),
                   ),
                   //Analyze Showcase Button
@@ -146,10 +146,10 @@ class MainPage extends StatelessWidget {
                     style: TextButton.styleFrom(
                         primary: Colors.black,
                         backgroundColor: Colors.amber,
-                        shape: BeveledRectangleBorder(
+                        shape: const BeveledRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(14)),
                         ),
-                        textStyle: TextStyle(fontSize: 25),
+                        textStyle: const TextStyle(fontSize: 25),
                         fixedSize: Size(200, 80)),
                   ),
                   //Settings Button
@@ -161,17 +161,17 @@ class MainPage extends StatelessWidget {
                             builder: (context) => SettingsPage(),
                           ));
                     },
-                    child: Text('Settings'),
+                    child: const Text('Settings'),
                     style: TextButton.styleFrom(
                         primary: Colors.black,
                         backgroundColor: Colors.amber,
-                        shape: BeveledRectangleBorder(
+                        shape: const BeveledRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(14)),
                         ),
-                        textStyle: TextStyle(fontSize: 25),
+                        textStyle: const TextStyle(fontSize: 25),
                         fixedSize: Size(200, 50)),
                   ),
-                  SizedBox(height: 70),
+                  const SizedBox(height: 70),
                 ],
               ),
             ),

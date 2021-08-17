@@ -50,7 +50,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
     return Scaffold(
       backgroundColor: Colors.grey[800],
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Analyze Showcase',
           style: TextStyle(fontSize: 24),
         ),
@@ -67,7 +67,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.amber,
                   borderRadius: BorderRadius.all(Radius.circular(14)),
                 ),
@@ -82,16 +82,16 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                             "${dayIsSelected == false ? DateFormat.EEEE().format(currentTime) : DateFormat.EEEE().format(DateTime(
                                     currentTime.year,
                                     currentTime.month,
-                                    currentTime.day + selectedDay - 1,
+                                    currentTime.weekday + selectedDay - 1,
                                   ))}, " +
                                 "$selectedWeek, " +
                                 "${DateFormat.MMMM().format(currentTime)}",
-                            style: TextStyle(fontSize: 18),
+                            style: const TextStyle(fontSize: 18),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(14.0),
-                          child: Text(
+                          child: const Text(
                             'Total Expense: 1000\$',
                             style: TextStyle(fontSize: 16),
                           ),
@@ -129,7 +129,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
             padding: const EdgeInsets.all(10),
             child: Container(
               height: 60,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.amber,
                 borderRadius: BorderRadius.all(Radius.circular(14)),
               ),
@@ -140,7 +140,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                   SelectedDay(selectedDay: currentSelectedDay),
                   Padding(
                     padding: const EdgeInsets.only(right: 25),
-                    child: Text(
+                    child: const Text(
                       'Expenses',
                       style: TextStyle(
                         fontSize: 22,
@@ -150,10 +150,10 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
-                      shape: CircleBorder(),
+                      shape: const CircleBorder(),
                       backgroundColor: Colors.orange,
                       primary: Colors.black,
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         fontSize: 30,
                       ),
                     ),
@@ -164,10 +164,10 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                       // print('${months.add(months: 1).MMM}');
                       print('selected day is $selectedDay');
                       print('selected week is $selectedWeek');
-                      print(
-                          'selected day is ${DateFormat.EEEE().format(DateTime(currentTime.year, currentTime.month, currentTime.day + selectedDay - 1))}');
+                      // print(
+                      //     'selected day is ${DateFormat.EEEE().format(DateTime(currentTime.year, currentTime.month, currentTime.day + selectedDay - 1))}');
                     },
-                    child: Text('?'),
+                    child: const Text('?'),
                   ),
                 ],
               ),

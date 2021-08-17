@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SelectedWeek extends StatefulWidget {
-  final selectedWeek;
+  final Function selectedWeek;
   SelectedWeek({this.selectedWeek});
 
   @override

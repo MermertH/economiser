@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class SelectedDay extends StatefulWidget {
-  final selectedDay;
+  final Function selectedDay;
   SelectedDay({this.selectedDay});
   @override
   _SelectedDayState createState() => _SelectedDayState();
@@ -58,13 +58,16 @@ class _SelectedDayState extends State<SelectedDay> {
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Center(
-                      child: Text(
-                          '${DateFormat.E().format(weekday.subtract(Duration(days: index + 1)))}')),
+                      child: Text('${DateFormat.EEEE().format(DateTime(
+                    weekday.year,
+                    weekday.month,
+                    weekday.weekday + index,
+                  ))}')),
                 )),
-            value: (index + -7)
-                .abs(), // due to reversed function, index must be reverted too.
+            value: index +
+                1, // due to reversed function, index must be reverted too.
           );
-        }).reversed.toList();
+        });
       },
       onSelected: (value) {
         print('selected day is $value');

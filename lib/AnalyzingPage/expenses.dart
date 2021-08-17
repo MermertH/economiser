@@ -1,12 +1,12 @@
 class Expenses {
   final String id;
   final String title;
-  final String cost;
+  final int cost;
   final DateTime date;
-  Expenses(
+  Expenses({
     this.id,
     this.title,
     this.cost,
     this.date,
-  );
+  });
 }
