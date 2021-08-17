@@ -5,8 +5,7 @@ import './ListItems.dart';
 class ExpenseList extends StatefulWidget {
   final selectedDay;
   final selectedWeek;
-  final selectedMonth;
-  ExpenseList(this.selectedDay, this.selectedWeek, this.selectedMonth);
+  ExpenseList(this.selectedDay, this.selectedWeek);
   @override
   _ExpenseListState createState() => _ExpenseListState();
 }
@@ -66,10 +65,6 @@ class _ExpenseListState extends State<ExpenseList> {
                         itemCount: snapshot.data.size,
                         itemBuilder: (context, index) => ListItems(
                           index,
-                          widget.selectedDay,
-                          widget.selectedWeek,
-                          widget.selectedMonth,
-                          snapshot.data,
                         ),
                       );
                     });

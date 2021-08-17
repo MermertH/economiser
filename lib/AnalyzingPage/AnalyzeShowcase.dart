@@ -1,4 +1,3 @@
-
 import 'package:economiser/AnalyzingPage/cost_of_day.dart';
 import 'package:economiser/AnalyzingPage/selected_day.dart';
 import 'package:economiser/AnalyzingPage/selected_month.dart';
@@ -6,6 +5,7 @@ import 'package:economiser/AnalyzingPage/selected_week.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:jiffy/jiffy.dart';
 import './status_bar.dart';
 import './expense_list.dart';
 
@@ -15,21 +15,32 @@ class AnalyzeShowcase extends StatefulWidget {
 }
 
 class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
+  final currentTime = DateTime.now();
+  final currentJiffy = Jiffy();
   var selectedDay;
   var selectedWeek;
-  var selectedMonth;
-  final currentTime = DateTime.now();
+  bool dayIsSelected = false;
+
+  @override
+  void initState() {
+    selectedDay = currentTime.weekday;
+    selectedWeek = DateFormat.QQQ().format(currentTime);
+    super.initState();
+  }
 
   void currentSelectedDay(int day) {
-    selectedDay = day;
+    setState(() {
+      setState(() {
+        selectedDay = day;
+        dayIsSelected = true;
+      });
+    });
   }
 
-  void currentSelectedWeek(int week) {
-    selectedWeek = week;
-  }
-
-  void currentSelectedMonth(int month) {
-    selectedMonth = month;
+  void currentSelectedWeek(String week) {
+    setState(() {
+      selectedWeek = week;
+    });
   }
 
   @override
@@ -47,7 +58,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
         actions: [
           //PopUpMenus.
           SelectedWeek(selectedWeek: currentSelectedWeek),
-          SelectedMonth(selectedMonth: currentSelectedMonth),
+          // SelectedMonth(selectedMonth: currentSelectedMonth),
         ],
       ),
       body: Column(
@@ -68,8 +79,12 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                         Padding(
                           padding: const EdgeInsets.all(14.0),
                           child: Text(
-                            "${DateFormat.EEEE().format(currentTime)}, " +
-                                "${DateFormat.QQQ().format(currentTime)}, " +
+                            "${dayIsSelected == false ? DateFormat.EEEE().format(currentTime) : DateFormat.EEEE().format(DateTime(
+                                    currentTime.year,
+                                    currentTime.month,
+                                    currentTime.day + selectedDay - 1,
+                                  ))}, " +
+                                "$selectedWeek, " +
                                 "${DateFormat.MMMM().format(currentTime)}",
                             style: TextStyle(fontSize: 18),
                           ),
@@ -149,7 +164,8 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                       // print('${months.add(months: 1).MMM}');
                       print('selected day is $selectedDay');
                       print('selected week is $selectedWeek');
-                      print('selected month is $selectedMonth');
+                      print(
+                          'selected day is ${DateFormat.EEEE().format(DateTime(currentTime.year, currentTime.month, currentTime.day + selectedDay - 1))}');
                     },
                     child: Text('?'),
                   ),
@@ -157,7 +173,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
               ),
             ),
           ),
-          ExpenseList(selectedDay,selectedWeek,selectedMonth),
+          ExpenseList(selectedDay, selectedWeek),
         ],
       ),
     );
