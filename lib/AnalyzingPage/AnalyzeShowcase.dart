@@ -146,7 +146,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                       color: Colors.white,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: List.generate(7, (index) => StatusBar()),
+                        children: List.generate(7, (index) => StatusBar(index, selectedWeek)),
                       ),
                     ),
                     Container(
