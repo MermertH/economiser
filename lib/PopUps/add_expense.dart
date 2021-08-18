@@ -179,6 +179,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                           'expenseCost': expenseCost,
                           'addingDate': DateTime.now(),
                         });
+
                         Navigator.of(context).pop(true);
                       }
                     },

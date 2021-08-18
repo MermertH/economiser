@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economiser/AnalyzingPage/cost_of_day.dart';
 import 'package:economiser/AnalyzingPage/selected_day.dart';
 import 'package:economiser/AnalyzingPage/selected_week.dart';
@@ -14,6 +15,10 @@ class AnalyzeShowcase extends StatefulWidget {
 }
 
 class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
+  final CollectionReference expenseCosts =
+      FirebaseFirestore.instance.collection('Expenses');
+  final Stream<QuerySnapshot> _totalExpenseCost =
+      FirebaseFirestore.instance.collection('Expenses').snapshots();
   final currentTime = DateTime.now();
   final currentJiffy = Jiffy();
   var selectedDay;
@@ -43,7 +48,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
   @override
   Widget build(BuildContext context) {
     final maxWidth = MediaQuery.of(context).size.width;
-    final maxHeight = MediaQuery.of(context).size.height;
+    //final maxHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.grey[800],
       appBar: AppBar(
@@ -89,10 +94,45 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(14.0),
-                          child: const Text(
-                            'Total Expense: 1000\$',
-                            style: TextStyle(fontSize: 16),
-                          ),
+                          child: StreamBuilder<QuerySnapshot>(
+                              stream: _totalExpenseCost,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) {
+                                  return Text('Something went wrong');
+                                }
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return FittedBox(
+                                    fit: BoxFit.cover,
+                                    clipBehavior: Clip.hardEdge,
+                                    child: Text('...Loading...'),
+                                  );
+                                }
+                                return StreamBuilder<QuerySnapshot>(
+                                    stream: expenseCosts
+                                        .doc(snapshot.data.docs.first.id)
+                                        .collection('Expense')
+                                        .snapshots(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasError) {
+                                        return Text('Something went wrong');
+                                      }
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return FittedBox(
+                                          fit: BoxFit.cover,
+                                          clipBehavior: Clip.hardEdge,
+                                          child: Text('...Loading...'),
+                                        );
+                                      }
+                                      return Text(
+                                        'Total Expense: ${getTheCostOfTheMonth(snapshot)}\$',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      );
+                                    });
+                              }),
                         ),
                       ],
                     ),
@@ -176,5 +216,13 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
         ],
       ),
     );
+  }
+
+  int getTheCostOfTheMonth(AsyncSnapshot<QuerySnapshot<Object>> snapshot) {
+    var cost = 0;
+    for (int i = 0; i < snapshot.data.docs.length; i++) {
+      cost += snapshot.data.docs[i].get('expenseCost');
+    }
+    return cost;
   }
 }

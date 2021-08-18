@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:economiser/AnalyzingPage/selected_week.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -21,6 +20,7 @@ class _CostOfDayState extends State<CostOfDay> {
   final Stream<QuerySnapshot> _weeklyCosts =
       FirebaseFirestore.instance.collection('Expenses').snapshots();
   final daysOfWeek = DateTime.now();
+  bool isExist;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +77,6 @@ class _CostOfDayState extends State<CostOfDay> {
                                 child: Text('...'),
                               );
                             }
-
                             return Text(
                               '${getTheCostOfDay(
                                 snapshot,
