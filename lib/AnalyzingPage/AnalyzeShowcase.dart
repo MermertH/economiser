@@ -1,6 +1,5 @@
 import 'package:economiser/AnalyzingPage/cost_of_day.dart';
 import 'package:economiser/AnalyzingPage/selected_day.dart';
-import 'package:economiser/AnalyzingPage/selected_month.dart';
 import 'package:economiser/AnalyzingPage/selected_week.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,10 +29,8 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
 
   void currentSelectedDay(int day) {
     setState(() {
-      setState(() {
-        selectedDay = day;
-        dayIsSelected = true;
-      });
+      selectedDay = day;
+      dayIsSelected = true;
     });
   }
 
@@ -82,7 +79,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                             "${dayIsSelected == false ? DateFormat.EEEE().format(currentTime) : DateFormat.EEEE().format(DateTime(
                                     currentTime.year,
                                     currentTime.month,
-                                    currentTime.weekday + selectedDay - 1,
+                                    currentTime.weekday + selectedDay - 2,
                                   ))}, " +
                                 "$selectedWeek, " +
                                 "${DateFormat.MMMM().format(currentTime)}",

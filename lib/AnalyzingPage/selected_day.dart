@@ -58,11 +58,10 @@ class _SelectedDayState extends State<SelectedDay> {
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Center(
-                      child: Text('${DateFormat.EEEE().format(DateTime(
-                    weekday.year,
-                    weekday.month,
-                    weekday.weekday + index,
-                  ))}')),
+                      child: Text('${DateFormat.EEEE().format(
+                    DateTime(weekday.year, weekday.month,
+                        DateTime.monday + index + 1),
+                  )}')),
                 )),
             value: index +
                 1, // due to reversed function, index must be reverted too.
