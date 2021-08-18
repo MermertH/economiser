@@ -61,6 +61,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
       body: Column(
         children: [
           Expanded(
+            flex: 14,
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Container(
@@ -115,7 +116,8 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: List.generate(7, (index) => CostOfDay()),
+                      children: List.generate(
+                          7, (index) => CostOfDay(index, selectedWeek)),
                     ),
                   ],
                 ),

@@ -26,6 +26,7 @@ class _ExpenseListState extends State<ExpenseList> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
+      flex: 12,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Container(
