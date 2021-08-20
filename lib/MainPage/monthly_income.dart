@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MonthlyIncome extends StatelessWidget {
-  final Stream<QuerySnapshot> _usersStream =
-      FirebaseFirestore.instance.collection('Income').snapshots();
+  final CollectionReference income =
+      FirebaseFirestore.instance.collection('Income');
+
   @override
   Widget build(BuildContext context) {
+    var _userAuth = FirebaseAuth.instance.currentUser;
     return Container(
       margin: EdgeInsets.only(right: 40),
       height: 80,
@@ -34,7 +37,7 @@ class MonthlyIncome extends StatelessWidget {
                     child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: StreamBuilder<QuerySnapshot>(
-                    stream: _usersStream,
+                    stream: income.snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasError) {
                         return Text('Something went wrong');
@@ -48,8 +51,9 @@ class MonthlyIncome extends StatelessWidget {
                         );
                       }
                       return Text(
-                        snapshot.data.docs.isNotEmpty
-                            ? '${snapshot.data.docs.first['income']}\$'
+                        snapshot.data.docs
+                                .any((doc) => doc.id == _userAuth.uid)
+                            ? '${snapshot.data.docs.firstWhere((doc) => doc.id == _userAuth.uid).get('income')}\$'
                             : '0\$',
                         style: TextStyle(fontSize: 18),
                       );

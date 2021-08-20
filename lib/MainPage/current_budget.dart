@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economiser/PopUps/salary_added.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 
@@ -10,13 +11,10 @@ class CurrentBudget extends StatefulWidget {
 }
 
 class _CurrentBudgetState extends State<CurrentBudget> {
-  final Stream<QuerySnapshot> _budgetStream =
-      FirebaseFirestore.instance.collection('Budget').snapshots();
   CollectionReference budgetRefference =
       FirebaseFirestore.instance.collection('Budget');
   CollectionReference income = FirebaseFirestore.instance.collection('Income');
-  final Stream<QuerySnapshot> _incomeStream =
-      FirebaseFirestore.instance.collection('Income').snapshots();
+  var _userAuth = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +45,7 @@ class _CurrentBudgetState extends State<CurrentBudget> {
                     child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: StreamBuilder<QuerySnapshot>(
-                    stream: _incomeStream,
+                    stream: income.snapshots(),
                     builder: (context, incomeSnapshot) {
                       if (incomeSnapshot.hasError) {
                         return Text('Something went wrong');
@@ -62,7 +60,7 @@ class _CurrentBudgetState extends State<CurrentBudget> {
                         );
                       }
                       return StreamBuilder<QuerySnapshot>(
-                        stream: _budgetStream,
+                        stream: budgetRefference.snapshots(),
                         builder: (context, budgetSnapshot) {
                           if (budgetSnapshot.hasError) {
                             return Text('Something went wrong');
@@ -76,7 +74,9 @@ class _CurrentBudgetState extends State<CurrentBudget> {
                               ),
                             );
                           }
-                          if (incomeSnapshot.data.docs.isEmpty) {
+                          if (incomeSnapshot.data.docs
+                                  .any((doc) => doc.id == _userAuth.uid) ==
+                              false) {
                             print('check is successful');
                             // if there is no income, then do not start monthly income function,
                           } else {
@@ -85,8 +85,9 @@ class _CurrentBudgetState extends State<CurrentBudget> {
                           }
 
                           return Text(
-                            budgetSnapshot.data.docs.isNotEmpty
-                                ? '${budgetSnapshot.data.docs.first['currentBudget']}\$'
+                            budgetSnapshot.data.docs
+                                    .any((doc) => doc.id == _userAuth.uid)
+                                ? '${budgetSnapshot.data.docs.firstWhere((doc) => doc.id == _userAuth.uid).get('currentBudget')}\$'
                                 : '0\$',
                             style: TextStyle(fontSize: 18),
                           );
@@ -108,7 +109,9 @@ class _CurrentBudgetState extends State<CurrentBudget> {
       CollectionReference<Object> income,
       AsyncSnapshot<QuerySnapshot<Object>> incomeSnapshot) async {
     Timestamp addingDate = await income.get().then((querySnapshot) {
-      return querySnapshot.docs.first['monthlySalaryDate'];
+      return querySnapshot.docs
+          .firstWhere((doc) => doc.id == _userAuth.uid)
+          .get('monthlySalaryDate');
     });
     print('current date: ${Jiffy().dateTime}');
     //print(Jiffy(addingDate.toDate()).add(minutes: 28).dateTime);
@@ -120,13 +123,15 @@ class _CurrentBudgetState extends State<CurrentBudget> {
         .dateTime
         .difference(Jiffy().dateTime)
         .isNegative) {
-      income.doc(incomeSnapshot.data.docs.first.id).update({
+      income.doc(_userAuth.uid).update({
         'monthlySalaryDate': Jiffy(addingDate.toDate()).add(months: 1).dateTime,
       });
-      budgetRefference.doc(budgetSnapshot.data.docs.first.id).update({
+      budgetRefference.doc(_userAuth.uid).update({
         'currentBudget':
             FieldValue.increment(await income.get().then((querySnapshot) {
-          return querySnapshot.docs.first['income'];
+          return querySnapshot.docs
+              .firstWhere((doc) => doc.id == _userAuth.uid)
+              .get('income');
         })),
         'extraBudgetAddingDate': DateTime.now(),
       });

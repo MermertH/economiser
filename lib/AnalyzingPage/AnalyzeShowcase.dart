@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economiser/AnalyzingPage/cost_of_day.dart';
 import 'package:economiser/AnalyzingPage/selected_day.dart';
 import 'package:economiser/AnalyzingPage/selected_week.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -17,8 +18,7 @@ class AnalyzeShowcase extends StatefulWidget {
 class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
   final CollectionReference expenseCosts =
       FirebaseFirestore.instance.collection('Expenses');
-  final Stream<QuerySnapshot> _totalExpenseCost =
-      FirebaseFirestore.instance.collection('Expenses').snapshots();
+  var _userAuth = FirebaseAuth.instance.currentUser;
   final currentTime = DateTime.now();
   final currentJiffy = Jiffy();
   var selectedDay;
@@ -85,7 +85,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                             "${dayIsSelected == false ? DateFormat.EEEE().format(currentTime) : DateFormat.EEEE().format(DateTime(
                                     currentTime.year,
                                     currentTime.month,
-                                    currentTime.weekday + selectedDay - 2,
+                                    DateTime.monday + selectedDay,
                                   ))}, " +
                                 "$selectedWeek, " +
                                 "${DateFormat.MMMM().format(currentTime)}",
@@ -95,7 +95,10 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                         Padding(
                           padding: const EdgeInsets.all(14.0),
                           child: StreamBuilder<QuerySnapshot>(
-                              stream: _totalExpenseCost,
+                              stream: expenseCosts
+                                  .doc(_userAuth.uid)
+                                  .collection('Expense')
+                                  .snapshots(),
                               builder: (context, snapshot) {
                                 if (snapshot.hasError) {
                                   return Text('Something went wrong');
@@ -108,30 +111,12 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                                     child: Text('...Loading...'),
                                   );
                                 }
-                                return StreamBuilder<QuerySnapshot>(
-                                    stream: expenseCosts
-                                        .doc(snapshot.data.docs.first.id)
-                                        .collection('Expense')
-                                        .snapshots(),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasError) {
-                                        return Text('Something went wrong');
-                                      }
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.waiting) {
-                                        return FittedBox(
-                                          fit: BoxFit.cover,
-                                          clipBehavior: Clip.hardEdge,
-                                          child: Text('...Loading...'),
-                                        );
-                                      }
-                                      return Text(
-                                        'Total Expense: ${getTheCostOfTheMonth(snapshot)}\$',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      );
-                                    });
+                                return Text(
+                                  'Total Expense: ${getTheCostOfTheMonth(snapshot)}\$',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                );
                               }),
                         ),
                       ],
@@ -146,7 +131,8 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                       color: Colors.white,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: List.generate(7, (index) => StatusBar(index, selectedWeek)),
+                        children: List.generate(
+                            7, (index) => StatusBar(index, selectedWeek)),
                       ),
                     ),
                     Container(

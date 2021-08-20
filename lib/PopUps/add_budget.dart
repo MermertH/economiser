@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddBudgetDialog extends StatefulWidget {
@@ -8,8 +9,7 @@ class AddBudgetDialog extends StatefulWidget {
 
 class _AddBudgetDialogState extends State<AddBudgetDialog> {
   final _formKey = GlobalKey<FormState>();
-  final Stream<QuerySnapshot> _usersStream =
-      FirebaseFirestore.instance.collection('Budget').snapshots();
+  var _userAuth = FirebaseAuth.instance.currentUser;
   CollectionReference budgetRefference =
       FirebaseFirestore.instance.collection('Budget');
   String amount;
@@ -100,22 +100,22 @@ class _AddBudgetDialogState extends State<AddBudgetDialog> {
             ),
             Spacer(),
             StreamBuilder<QuerySnapshot>(
-              stream: _usersStream,
+              stream: budgetRefference.snapshots(),
               builder: (context, snapshot) {
                 return TextButton(
                   onPressed: () {
                     if (!_formKey.currentState.validate()) {
                       return;
                     } else {
-                      if (snapshot.data.docs.isEmpty) {
-                        budgetRefference.add({
+                      if (snapshot.data.docs
+                              .any((doc) => doc.id == _userAuth.uid) ==
+                          false) {
+                        budgetRefference.doc(_userAuth.uid).set({
                           'currentBudget': int.parse(amount),
                           'addingDate': DateTime.now(),
                         });
                       } else {
-                        budgetRefference
-                            .doc(snapshot.data.docs.first.id)
-                            .update({
+                        budgetRefference.doc(_userAuth.uid).update({
                           'currentBudget':
                               FieldValue.increment(int.parse(amount)),
                           'extraBudgetAddingDate': DateTime.now(),

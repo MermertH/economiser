@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddExpenseDialog extends StatefulWidget {
@@ -7,14 +8,11 @@ class AddExpenseDialog extends StatefulWidget {
 }
 
 class _AddExpenseDialogState extends State<AddExpenseDialog> {
-  final Stream<QuerySnapshot> _expenseStream =
-      FirebaseFirestore.instance.collection('Expenses').snapshots();
   final CollectionReference expenses =
       FirebaseFirestore.instance.collection('Expenses');
-  final Stream<QuerySnapshot> _totalBudget =
-      FirebaseFirestore.instance.collection('Budget').snapshots();
   final CollectionReference totalBudget =
       FirebaseFirestore.instance.collection('Budget');
+  var _userAuth = FirebaseAuth.instance.currentUser;
   final _formKey = GlobalKey<FormState>();
   String expenseName;
   int expenseCost;
@@ -167,11 +165,11 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
             // cost
 
             Spacer(),
-            StreamBuilder<QuerySnapshot>(
-                stream: _totalBudget,
+            StreamBuilder(
+                stream: totalBudget.snapshots(),
                 builder: (context, budgetSnapshot) {
-                  return StreamBuilder<QuerySnapshot>(
-                      stream: _expenseStream,
+                  return StreamBuilder(
+                      stream: expenses.snapshots(),
                       builder: (context, expenseSnapshot) {
                         return TextButton(
                           onPressed: () {
@@ -179,7 +177,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                               return;
                             } else {
                               expenses
-                                  .doc(expenseSnapshot.data.docs.first.id)
+                                  .doc(_userAuth.uid)
                                   .collection('Expense')
                                   .add({
                                 'expenseName': expenseName,

@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SetIncomeDialog extends StatefulWidget {
@@ -10,8 +11,7 @@ class SetIncomeDialog extends StatefulWidget {
 class _SetIncomeDialogState extends State<SetIncomeDialog> {
   // firebase references.
   CollectionReference incomes = FirebaseFirestore.instance.collection('Income');
-  final Stream<QuerySnapshot> _usersStream =
-      FirebaseFirestore.instance.collection('Income').snapshots();
+  var _userAuth = FirebaseAuth.instance.currentUser;
 
   // validation key.
   final _formKey = GlobalKey<FormState>();
@@ -132,16 +132,19 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
                 child: Text('Salary Date')),
             Spacer(),
             StreamBuilder<QuerySnapshot>(
-              stream: _usersStream,
+              stream: incomes.snapshots(),
               builder: (context, snapshot) {
                 return TextButton(
                   onPressed: () {
                     if (!_formKey.currentState.validate()) {
                       return;
                     } else {
-                      if (snapshot.data.docs.isEmpty) {
+                      if (snapshot.data.docs
+                              .any((doc) => doc.id == _userAuth.uid) ==
+                          false) {
                         incomes
-                            .add({
+                            .doc(_userAuth.uid)
+                            .set({
                               'income': int.parse(input),
                               'addingDate': selectedDate != DateTime.now()
                                   ? selectedDate
@@ -155,7 +158,7 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
                             .catchError((error) =>
                                 print("Failed to add income: $error"));
                       } else {
-                        incomes.doc(snapshot.data.docs.first.id).set({
+                        incomes.doc(_userAuth.uid).set({
                           'income': int.parse(input),
                           'addingDate': selectedDate != DateTime.now()
                               ? selectedDate

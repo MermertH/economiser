@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import './expenses.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,7 @@ class ExpenseList extends StatefulWidget {
 class _ExpenseListState extends State<ExpenseList> {
   final CollectionReference expenses =
       FirebaseFirestore.instance.collection('Expenses');
-  final Stream<QuerySnapshot> _expenseStream =
-      FirebaseFirestore.instance.collection('Expenses').snapshots();
+      var _userAuth = FirebaseAuth.instance.currentUser;
   List<Expenses> currentList = [];
   final rng = new Random();
   bool isSuccessful;
@@ -35,7 +35,10 @@ class _ExpenseListState extends State<ExpenseList> {
             borderRadius: BorderRadius.all(Radius.circular(14)),
           ),
           child: StreamBuilder<QuerySnapshot>(
-              stream: _expenseStream,
+              stream: expenses
+                  .doc(_userAuth.uid)
+                  .collection('Expense')
+                  .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Text('Something went wrong');
@@ -50,36 +53,16 @@ class _ExpenseListState extends State<ExpenseList> {
                     ),
                   );
                 }
-                return StreamBuilder<QuerySnapshot>(
-                    stream: expenses
-                        .doc(snapshot.data.docs.first.id)
-                        .collection('Expense')
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return Text('Something went wrong');
-                      }
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: CircularProgressIndicator(
-                              backgroundColor: Colors.black,
-                            ),
-                          ),
-                        );
-                      }
-                      currentList = selectedExpenses(
-                          snapshot, widget.selectedDay, widget.selectedWeek);
+                currentList = selectedExpenses(
+                    snapshot, widget.selectedDay, widget.selectedWeek);
 
-                      return ListView.builder(
-                        itemCount: currentList.length,
-                        itemBuilder: (context, index) => ListItems(
-                          index,
-                          currentList,
-                        ),
-                      );
-                    });
+                return ListView.builder(
+                  itemCount: currentList.length,
+                  itemBuilder: (context, index) => ListItems(
+                    index,
+                    currentList,
+                  ),
+                );
               }),
         ),
       ),

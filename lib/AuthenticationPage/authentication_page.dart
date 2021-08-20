@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import './authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,16 +19,23 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
     bool isLogin,
     BuildContext context,
   ) async {
+    UserCredential _userAuth;
     try {
       setState(() {
         _isLoading = true;
       });
       if (isLogin) {
-        await _auth.signInWithEmailAndPassword(
+        _userAuth = await _auth.signInWithEmailAndPassword(
             email: email, password: password);
       } else {
-        await _auth.createUserWithEmailAndPassword(
+        _userAuth = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(_userAuth.user.uid)
+            .set({
+          'email': email,
+        });
       }
     } on FirebaseAuthException catch (err) {
       var message = 'An error occured, please check your credentials!';
@@ -52,6 +61,6 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return AuthenticationForm(_submitAuthForm,_isLoading);
+    return AuthenticationForm(_submitAuthForm, _isLoading);
   }
 }

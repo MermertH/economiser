@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -17,8 +18,7 @@ class CostOfDay extends StatefulWidget {
 class _CostOfDayState extends State<CostOfDay> {
   final CollectionReference expenseCosts =
       FirebaseFirestore.instance.collection('Expenses');
-  final Stream<QuerySnapshot> _weeklyCosts =
-      FirebaseFirestore.instance.collection('Expenses').snapshots();
+      var _userAuth = FirebaseAuth.instance.currentUser;
   final daysOfWeek = DateTime.now();
   bool isExist;
 
@@ -48,7 +48,10 @@ class _CostOfDayState extends State<CostOfDay> {
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: StreamBuilder<QuerySnapshot>(
-                    stream: _weeklyCosts,
+                    stream: expenseCosts
+                        .doc(_userAuth.uid)
+                        .collection('Expense')
+                        .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasError) {
                         return Text('Something went wrong');
@@ -60,33 +63,15 @@ class _CostOfDayState extends State<CostOfDay> {
                           child: Text('...'),
                         );
                       }
-                      return StreamBuilder<QuerySnapshot>(
-                          stream: expenseCosts
-                              .doc(snapshot.data.docs.first.id)
-                              .collection('Expense')
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              return Text('Something went wrong');
-                            }
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return FittedBox(
-                                fit: BoxFit.cover,
-                                clipBehavior: Clip.hardEdge,
-                                child: Text('...'),
-                              );
-                            }
-                            return Text(
-                              '${getTheCostOfDay(
-                                snapshot,
-                                widget.index,
-                                widget.selectedWeek,
-                              )}\$',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            );
-                          });
+                      return Text(
+                        '${getTheCostOfDay(
+                          snapshot,
+                          widget.index,
+                          widget.selectedWeek,
+                        )}\$',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      );
                     }),
               ),
             ),
