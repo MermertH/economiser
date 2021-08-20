@@ -57,7 +57,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.amber,
+                    color: Colors.orange[400],
                     borderRadius: BorderRadius.circular(20)),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -74,7 +74,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.orange[500],
+                  color: Colors.amber[600],
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
@@ -143,7 +143,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
                                   ),
-                                  backgroundColor: Colors.amber,
+                                  backgroundColor: Colors.orange,
                                 ),
                                 child: Text('Login'),
                               )
@@ -156,7 +156,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
                                   ),
-                                  backgroundColor: Colors.amber,
+                                  backgroundColor: Colors.orange,
                                 ),
                                 child: Text('SignUp'),
                               ),
@@ -181,7 +181,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.amber,
+                  color: Colors.amber[900],
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
