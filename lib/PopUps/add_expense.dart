@@ -11,6 +11,10 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
       FirebaseFirestore.instance.collection('Expenses').snapshots();
   final CollectionReference expenses =
       FirebaseFirestore.instance.collection('Expenses');
+  final Stream<QuerySnapshot> _totalBudget =
+      FirebaseFirestore.instance.collection('Budget').snapshots();
+  final CollectionReference totalBudget =
+      FirebaseFirestore.instance.collection('Budget');
   final _formKey = GlobalKey<FormState>();
   String expenseName;
   int expenseCost;
@@ -164,36 +168,44 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
 
             Spacer(),
             StreamBuilder<QuerySnapshot>(
-                stream: _expenseStream,
-                builder: (context, snapshot) {
-                  return TextButton(
-                    onPressed: () {
-                      if (!_formKey.currentState.validate()) {
-                        return;
-                      } else {
-                        expenses
-                            .doc(snapshot.data.docs.first.id)
-                            .collection('Expense')
-                            .add({
-                          'expenseName': expenseName,
-                          'expenseCost': expenseCost,
-                          'addingDate': DateTime.now(),
-                        });
+                stream: _totalBudget,
+                builder: (context, budgetSnapshot) {
+                  return StreamBuilder<QuerySnapshot>(
+                      stream: _expenseStream,
+                      builder: (context, expenseSnapshot) {
+                        return TextButton(
+                          onPressed: () {
+                            if (!_formKey.currentState.validate()) {
+                              return;
+                            } else {
+                              expenses
+                                  .doc(expenseSnapshot.data.docs.first.id)
+                                  .collection('Expense')
+                                  .add({
+                                'expenseName': expenseName,
+                                'expenseCost': expenseCost,
+                                'addingDate': DateTime.now(),
+                              });
+                              // totalBudget
+                              //     .doc(budgetSnapshot.data.docs.first.id)
+                              //     .update({
 
-                        Navigator.of(context).pop(true);
-                      }
-                    },
-                    child: Text('Submit'),
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.amber,
-                      primary: Colors.black,
-                      shape: BeveledRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(14),
-                        ),
-                      ),
-                    ),
-                  );
+                              //     });
+                              Navigator.of(context).pop(true);
+                            }
+                          },
+                          child: Text('Submit'),
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.amber,
+                            primary: Colors.black,
+                            shape: BeveledRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(14),
+                              ),
+                            ),
+                          ),
+                        );
+                      });
                 }),
             Spacer(),
           ],

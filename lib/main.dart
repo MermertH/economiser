@@ -1,5 +1,6 @@
+import 'package:economiser/AuthenticationPage/authentication_page.dart';
 import 'package:flutter/material.dart';
-import 'MainPage/main_page.dart';
+// import 'MainPage/main_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() {
@@ -36,7 +37,7 @@ class _MyAppState extends State<MyApp> {
             theme: ThemeData(
               primarySwatch: Colors.orange,
             ),
-            home: MainPage(),
+            home: AuthenticationPage(),
           );
         }
         // Otherwise, show something whilst waiting for initialization to complete
