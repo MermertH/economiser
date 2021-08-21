@@ -184,11 +184,10 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                                 'expenseCost': expenseCost,
                                 'addingDate': DateTime.now(),
                               });
-                              // totalBudget
-                              //     .doc(budgetSnapshot.data.docs.first.id)
-                              //     .update({
-
-                              //     });
+                              totalBudget.doc(_userAuth.uid).update({
+                                'currentBudget':
+                                    FieldValue.increment(-expenseCost),
+                              });
                               Navigator.of(context).pop(true);
                             }
                           },
