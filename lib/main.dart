@@ -41,6 +41,16 @@ class _MyAppState extends State<MyApp> {
             home: StreamBuilder(
                 stream: FirebaseAuth.instance.authStateChanges(),
                 builder: (context, userSnapshot) {
+                  if (userSnapshot.connectionState == ConnectionState.waiting) {
+                    return Scaffold(
+                      backgroundColor: Colors.grey[850],
+                      body: Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.amber,
+                        ),
+                      ),
+                    );
+                  }
                   if (userSnapshot.hasData) {
                     return MainPage();
                   }

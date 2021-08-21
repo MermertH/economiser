@@ -26,10 +26,24 @@ class _MainPageState extends State<MainPage> {
   }
 
   void checkBudget() async {
-    // when app started, check if the budget is lower than 0, then show a warning dialog.
     print('entered here');
     DocumentReference _budget =
         FirebaseFirestore.instance.collection('Budget').doc(_userAuth.uid);
+    CollectionReference _setBudget =
+        FirebaseFirestore.instance.collection('Budget');
+    /*if there is no initial doc that has budget value, 
+      then create it. this behaviour prevents any error that comes
+       if user does not add any budget but add an expense */
+    var isExist = _budget.snapshots().map((doc) {
+      return doc.exists;
+    });
+    print(await isExist.first);
+    if (await isExist.first == false) {
+      _setBudget.doc(_userAuth.uid).set({
+        'currentBudget': 0,
+      });
+    }
+    // when app started, check if the budget is lower than 0, then show a warning dialog.
     var budget = _budget.snapshots().map((doc) {
       return doc.get('currentBudget');
     });
