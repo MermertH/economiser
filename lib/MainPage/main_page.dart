@@ -17,11 +17,14 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  CollectionReference _setBudget =
+      FirebaseFirestore.instance.collection('Budget');
   var _userAuth = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
     checkBudget();
+    checkBudgetWarning();
     super.initState();
   }
 
@@ -29,8 +32,6 @@ class _MainPageState extends State<MainPage> {
     print('entered here');
     DocumentReference _budget =
         FirebaseFirestore.instance.collection('Budget').doc(_userAuth.uid);
-    CollectionReference _setBudget =
-        FirebaseFirestore.instance.collection('Budget');
     /*if there is no initial doc that has budget value, 
       then create it. this behaviour prevents any error that comes
        if user does not add any budget but add an expense */
@@ -43,6 +44,11 @@ class _MainPageState extends State<MainPage> {
         'currentBudget': 0,
       });
     }
+  }
+
+  void checkBudgetWarning() async {
+    DocumentReference _budget =
+        FirebaseFirestore.instance.collection('Budget').doc(_userAuth.uid);
     // when app started, check if the budget is lower than 0, then show a warning dialog.
     var budget = _budget.snapshots().map((doc) {
       return doc.get('currentBudget');
@@ -163,6 +169,10 @@ class _MainPageState extends State<MainPage> {
                                   fontSize: 16,
                                 ),
                               )));
+                          checkBudgetWarning();
+                          setState(() {
+                            value = false;
+                          });
                         }
                       });
                     },
