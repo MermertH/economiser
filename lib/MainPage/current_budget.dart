@@ -83,7 +83,6 @@ class _CurrentBudgetState extends State<CurrentBudget> {
                             monthlyIncome(
                                 budgetSnapshot, income, incomeSnapshot);
                           }
-
                           return Text(
                             budgetSnapshot.data.docs
                                     .any((doc) => doc.id == _userAuth.uid)

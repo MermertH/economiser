@@ -1,14 +1,45 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economiser/AnalyzingPage/AnalyzeShowcase.dart';
 import 'package:economiser/PopUps/add_budget.dart';
 import 'package:economiser/PopUps/add_expense.dart';
 import 'package:economiser/PopUps/set_income_dialog.dart';
+import 'package:economiser/PopUps/show_budget_warning_dialog.dart';
 import 'package:economiser/SettingsPage/Settings.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import './app_label.dart';
 import './monthly_income.dart';
 import './current_budget.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  var _userAuth = FirebaseAuth.instance.currentUser;
+
+  @override
+  void initState() {
+    checkBudget();
+    super.initState();
+  }
+
+  void checkBudget() async {
+    // when app started, check if the budget is lower than 0, then show a warning dialog.
+    print('entered here');
+    DocumentReference _budget =
+        FirebaseFirestore.instance.collection('Budget').doc(_userAuth.uid);
+    var budget = _budget.snapshots().map((doc) {
+      return doc.get('currentBudget');
+    });
+    int currentBudget = await budget.first;
+    if (currentBudget < 0) {
+      showDialog(context: context, builder: (context) => BudgetWarningDialog());
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
