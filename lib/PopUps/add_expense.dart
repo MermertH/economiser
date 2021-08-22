@@ -8,9 +8,9 @@ class AddExpenseDialog extends StatefulWidget {
 }
 
 class _AddExpenseDialogState extends State<AddExpenseDialog> {
-  final CollectionReference expenses =
+  final CollectionReference _expenses =
       FirebaseFirestore.instance.collection('Expenses');
-  final CollectionReference totalBudget =
+  final CollectionReference _totalBudget =
       FirebaseFirestore.instance.collection('Budget');
   var _userAuth = FirebaseAuth.instance.currentUser;
   final _formKey = GlobalKey<FormState>();
@@ -166,17 +166,17 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
 
             Spacer(),
             StreamBuilder(
-                stream: totalBudget.snapshots(),
+                stream: _totalBudget.snapshots(),
                 builder: (context, budgetSnapshot) {
                   return StreamBuilder(
-                      stream: expenses.snapshots(),
+                      stream: _expenses.snapshots(),
                       builder: (context, expenseSnapshot) {
                         return TextButton(
                           onPressed: () {
                             if (!_formKey.currentState.validate()) {
                               return;
                             } else {
-                              expenses
+                              _expenses
                                   .doc(_userAuth.uid)
                                   .collection('Expense')
                                   .add({
@@ -184,7 +184,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                                 'expenseCost': expenseCost,
                                 'addingDate': DateTime.now(),
                               });
-                              totalBudget.doc(_userAuth.uid).update({
+                              _totalBudget.doc(_userAuth.uid).update({
                                 'currentBudget':
                                     FieldValue.increment(-expenseCost),
                               });

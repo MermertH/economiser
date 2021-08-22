@@ -25,7 +25,36 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     checkBudget();
     checkBudgetWarning();
+    checkExpenseDate();
     super.initState();
+  }
+
+  void checkExpenseDate() async {
+    CollectionReference _getExpense = FirebaseFirestore.instance
+        .collection('Expenses')
+        .doc(_userAuth.uid)
+        .collection('Expense');
+    var whatIs = _getExpense.snapshots().map((data) {
+      return data.docs.map((doc) {
+        return [doc.get('addingDate'), doc.id].asMap();
+      });
+    });
+    print('this id is: ${await whatIs.first}');
+    Iterable<Map<int, dynamic>> expenseDates = await whatIs.first;
+    expenseDates = expenseDates.toList();
+    // print(expenseDates);
+    // print(expenseDates.elementAt(0).values);
+    // print(expenseDates.first.values.first);
+    // print(expenseDates.first.values.last);
+    for (int i = 0; i < expenseDates.length; i++) {
+      Timestamp date = expenseDates.elementAt(i).values.first;
+      if (date.toDate().month != DateTime.now().month) {
+        _getExpense.doc(expenseDates.elementAt(i).values.last).delete();
+      } else {
+        print(
+            'expense ${expenseDates.elementAt(i).values.last} is not expired yet');
+      }
+    }
   }
 
   void checkBudget() async {

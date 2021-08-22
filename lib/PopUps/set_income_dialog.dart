@@ -10,7 +10,7 @@ class SetIncomeDialog extends StatefulWidget {
 
 class _SetIncomeDialogState extends State<SetIncomeDialog> {
   // firebase references.
-  CollectionReference incomes = FirebaseFirestore.instance.collection('Income');
+  CollectionReference _incomes = FirebaseFirestore.instance.collection('Income');
   var _userAuth = FirebaseAuth.instance.currentUser;
 
   // validation key.
@@ -132,7 +132,7 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
                 child: Text('Salary Date')),
             Spacer(),
             StreamBuilder<QuerySnapshot>(
-              stream: incomes.snapshots(),
+              stream: _incomes.snapshots(),
               builder: (context, snapshot) {
                 return TextButton(
                   onPressed: () {
@@ -142,7 +142,7 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
                       if (snapshot.data.docs
                               .any((doc) => doc.id == _userAuth.uid) ==
                           false) {
-                        incomes
+                        _incomes
                             .doc(_userAuth.uid)
                             .set({
                               'income': int.parse(input),
@@ -158,7 +158,7 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
                             .catchError((error) =>
                                 print("Failed to add income: $error"));
                       } else {
-                        incomes.doc(_userAuth.uid).set({
+                        _incomes.doc(_userAuth.uid).set({
                           'income': int.parse(input),
                           'addingDate': selectedDate != DateTime.now()
                               ? selectedDate

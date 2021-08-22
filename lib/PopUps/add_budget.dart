@@ -10,7 +10,7 @@ class AddBudgetDialog extends StatefulWidget {
 class _AddBudgetDialogState extends State<AddBudgetDialog> {
   final _formKey = GlobalKey<FormState>();
   var _userAuth = FirebaseAuth.instance.currentUser;
-  CollectionReference budgetRefference =
+  CollectionReference _budgetRefference =
       FirebaseFirestore.instance.collection('Budget');
   String amount;
 
@@ -100,7 +100,7 @@ class _AddBudgetDialogState extends State<AddBudgetDialog> {
             ),
             Spacer(),
             StreamBuilder<QuerySnapshot>(
-              stream: budgetRefference.snapshots(),
+              stream: _budgetRefference.snapshots(),
               builder: (context, snapshot) {
                 return TextButton(
                   onPressed: () {
@@ -110,12 +110,12 @@ class _AddBudgetDialogState extends State<AddBudgetDialog> {
                       if (snapshot.data.docs
                               .any((doc) => doc.id == _userAuth.uid) ==
                           false) {
-                        budgetRefference.doc(_userAuth.uid).set({
+                        _budgetRefference.doc(_userAuth.uid).set({
                           'currentBudget': int.parse(amount),
                           'addingDate': DateTime.now(),
                         });
                       } else {
-                        budgetRefference.doc(_userAuth.uid).update({
+                        _budgetRefference.doc(_userAuth.uid).update({
                           'currentBudget':
                               FieldValue.increment(int.parse(amount)),
                           'extraBudgetAddingDate': DateTime.now(),
