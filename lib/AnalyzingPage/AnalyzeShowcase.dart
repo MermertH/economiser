@@ -69,7 +69,10 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
           Expanded(
             flex: 14,
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: EdgeInsets.symmetric(
+                vertical: maxHeight * 0.0122,
+                horizontal: maxWidth * 0.0231,
+              ), //10
               child: Container(
                 decoration: const BoxDecoration(
                   color: Colors.amber,
@@ -81,7 +84,10 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(14.0),
+                          padding: EdgeInsets.symmetric(
+                            vertical: maxHeight * 0.0171,
+                            horizontal: maxWidth * 0.0324,
+                          ), //14
                           child: FittedBox(
                             child: Text(
                               "${dayIsSelected == false ? DateFormat.EEEE().format(currentTime) : DateFormat.EEEE().format(DateTime(
@@ -96,7 +102,10 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(14.0),
+                          padding: EdgeInsets.symmetric(
+                            vertical: maxHeight * 0.0171,
+                            horizontal: maxWidth * 0.0324,
+                          ), //14
                           child: StreamBuilder<QuerySnapshot>(
                               stream: expenseCosts
                                   .doc(_userAuth.uid)
@@ -156,7 +165,10 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.symmetric(
+              vertical: maxHeight * 0.0122,
+              horizontal: maxWidth * 0.0231,
+            ), //10
             child: Container(
               height: maxHeight * 0.0735,
               decoration: const BoxDecoration(
@@ -180,25 +192,36 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                       ),
                     ),
                   ),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      shape: const CircleBorder(),
-                      backgroundColor: Colors.orange,
-                      primary: Colors.black,
-                      textStyle: TextStyle(
-                        fontSize: maxHeight * 0.0367,
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: maxWidth * 0.0185,
+                      vertical: maxHeight * 0.0098,
+                    ), //8
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        shape: const CircleBorder(),
+                        backgroundColor: Colors.orange,
+                        primary: Colors.black,
+                        textStyle: TextStyle(
+                          fontSize: maxHeight * 0.0367,
+                        ),
+                      ),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => InformativeDialog());
+                        print('selected day is $selectedDay');
+                        print('selected week is $selectedWeek');
+                        print('max width: $maxWidth');
+                        print('max height: $maxHeight');
+                      },
+                      child: FittedBox(
+                        child: Text(
+                          '?',
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) => InformativeDialog());
-                      print('selected day is $selectedDay');
-                      print('selected week is $selectedWeek');
-                      print('max width: $maxWidth');
-                      print('max height: $maxHeight');
-                    },
-                    child: const Text('?'),
                   ),
                 ],
               ),

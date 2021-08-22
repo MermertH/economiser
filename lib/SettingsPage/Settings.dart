@@ -22,7 +22,10 @@ class SettingsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: EdgeInsets.symmetric(
+                horizontal: maxWidth * 0.0347,
+                vertical: maxHeight * 0.0183,
+              ),
               child: TextButton(
                 onPressed: () {
                   showDialog(

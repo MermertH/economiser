@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class LogoutVerificationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-   //var maxWidth = MediaQuery.of(context).size.width;
+    var maxWidth = MediaQuery.of(context).size.width;
     var maxHeight = MediaQuery.of(context).size.height;
     return Dialog(
       backgroundColor: Colors.amber,
@@ -41,7 +41,10 @@ class LogoutVerificationDialog extends StatelessWidget {
                     ),
                     Center(
                         child: Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: EdgeInsets.symmetric(
+                        vertical: maxHeight * 0.0122,
+                        horizontal: maxWidth * 0.0231,
+                      ), //10
                       child: Text(
                         'Are you sure that you want to logout?',
                         style: TextStyle(fontSize: maxHeight * 0.0220),

@@ -74,7 +74,10 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                     color: Colors.orange[400],
                     borderRadius: BorderRadius.circular(20)),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.symmetric(
+                    vertical: maxHeight * 0.0098,
+                    horizontal: maxWidth * 0.0185,
+                  ), //8
                   child: FittedBox(
                     child: Text(
                       'Welcome To Economiser',
@@ -87,14 +90,18 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: EdgeInsets.symmetric(
+                  horizontal: maxWidth * 0.0347, vertical: maxHeight * 0.0183),
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.amber[600],
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: EdgeInsets.symmetric(
+                    vertical: maxHeight * 0.0183,
+                    horizontal: maxWidth * 0.0347,
+                  ), //15
                   child: Form(
                     key: _formKey,
                     child: Column(
@@ -172,7 +179,12 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                                 child: Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: maxWidth * 0.0694),
-                              child: Text(_islogin ? 'Login' : 'SignUp'),
+                              child: Text(
+                                _islogin ? 'Login' : 'SignUp',
+                                style: TextStyle(
+                                  fontSize: maxHeight * 0.0196,
+                                ),
+                              ),
                             )),
                           ),
                         SizedBox(height: maxHeight * 0.0183),
@@ -184,9 +196,14 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                               });
                             },
                             child: FittedBox(
-                              child: Text(_islogin
-                                  ? 'Don\'t have an account? Press here to sign in'
-                                  : 'Have an account? Press here to login'),
+                              child: Text(
+                                _islogin
+                                    ? 'Don\'t have an account? Press here to sign in'
+                                    : 'Have an account? Press here to login',
+                                style: TextStyle(
+                                  fontSize: maxHeight * 0.0196,
+                                ),
+                              ),
                             ),
                           ),
                       ],
@@ -196,14 +213,20 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: EdgeInsets.symmetric(
+                vertical: maxHeight * 0.0183,
+                horizontal: maxWidth * 0.0347,
+              ), //15
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.amber[900],
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: EdgeInsets.symmetric(
+                    vertical: maxHeight * 0.0122,
+                    horizontal: maxWidth * 0.0231,
+                  ), //10
                   child: FittedBox(
                     child: Text(
                       'Please enter your email and password to login or sign up',

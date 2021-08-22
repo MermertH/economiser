@@ -25,18 +25,29 @@ class _CostOfDayState extends State<CostOfDay> {
   @override
   Widget build(BuildContext context) {
     final maxWidth = MediaQuery.of(context).size.width;
-    //final maxHeight = MediaQuery.of(context).size.height;
+    final maxHeight = MediaQuery.of(context).size.height;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.symmetric(
+        horizontal: maxWidth * 0.0185,
+        vertical: maxHeight * 0.0098,
+      ), //8
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: Text('${DateFormat.E().format(DateTime(
-              daysOfWeek.year,
-              daysOfWeek.month,
-              DateTime.monday + widget.index + 1,
-            ))}'),
+            padding: EdgeInsets.symmetric(
+              horizontal: maxWidth * 0.0046,
+              vertical: maxHeight * 0.0024,
+            ), //2
+            child: Text(
+              '${DateFormat.E().format(DateTime(
+                daysOfWeek.year,
+                daysOfWeek.month,
+                DateTime.monday + widget.index + 1,
+              ))}',
+              style: TextStyle(
+                fontSize: maxHeight * 0.0196,
+              ),
+            ),
           ),
           Container(
             width: maxWidth * 0.0925,
@@ -48,7 +59,10 @@ class _CostOfDayState extends State<CostOfDay> {
               clipBehavior: Clip.hardEdge,
               fit: BoxFit.scaleDown,
               child: Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: EdgeInsets.symmetric(
+                  horizontal: maxWidth * 0.0092,
+                  vertical: maxHeight * 0.0049,
+                ), //4
                 child: StreamBuilder<QuerySnapshot>(
                     stream: expenseCosts
                         .doc(_userAuth.uid)
@@ -73,7 +87,8 @@ class _CostOfDayState extends State<CostOfDay> {
                             widget.selectedWeek,
                           )}\$',
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: maxHeight * 0.0196,
+                              fontWeight: FontWeight.bold),
                         ),
                       );
                     }),

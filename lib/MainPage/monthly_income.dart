@@ -26,7 +26,7 @@ class MonthlyIncome extends StatelessWidget {
             Expanded(
               child: Text(
                 'Monthly Income',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: maxHeight * 0.0220),
               ),
             ),
             Expanded(
@@ -58,7 +58,7 @@ class MonthlyIncome extends StatelessWidget {
                                   .any((doc) => doc.id == _userAuth.uid)
                               ? '${snapshot.data.docs.firstWhere((doc) => doc.id == _userAuth.uid).get('income')}\$'
                               : '0\$',
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(fontSize: maxHeight * 0.0220),
                         ),
                       );
                     },

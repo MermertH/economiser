@@ -193,7 +193,13 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                               Navigator.of(context).pop(true);
                             }
                           },
-                          child: FittedBox(child: Text('Submit')),
+                          child: FittedBox(
+                              child: Text(
+                            'Submit',
+                            style: TextStyle(
+                              fontSize: maxHeight * 0.0196,
+                            ),
+                          )),
                           style: TextButton.styleFrom(
                             backgroundColor: Colors.amber,
                             primary: Colors.black,

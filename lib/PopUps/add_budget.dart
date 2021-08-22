@@ -26,7 +26,7 @@ class _AddBudgetDialogState extends State<AddBudgetDialog> {
       ),
       child: Container(
         height: maxHeight * 0.3063,
-        width: maxWidth * 0.4629,
+        width: maxWidth * 0.5787,
         child: Column(
           children: [
             Container(
@@ -127,7 +127,12 @@ class _AddBudgetDialogState extends State<AddBudgetDialog> {
                       Navigator.of(context).pop(true);
                     }
                   },
-                  child: FittedBox(child: Text('Submit')),
+                  child: Text(
+                    'Submit',
+                    style: TextStyle(
+                      fontSize: maxHeight * 0.0196,
+                    ),
+                  ),
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.amber,
                     primary: Colors.black,

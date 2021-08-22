@@ -102,9 +102,9 @@ class _MainPageState extends State<MainPage> {
             AppLabel(),
             // monthly income and current budget
             Container(
-              margin: EdgeInsets.only(
-                  left: maxWidth * 0.1157, top: maxHeight * 0.0612),
+              margin: EdgeInsets.only(top: maxHeight * 0.0612),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   // monthly income
                   MonthlyIncome(),

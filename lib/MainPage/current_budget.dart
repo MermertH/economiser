@@ -34,7 +34,7 @@ class _CurrentBudgetState extends State<CurrentBudget> {
             Expanded(
               child: Text(
                 'current budget',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: maxHeight * 0.0220),
               ),
             ),
             Expanded(
@@ -45,7 +45,7 @@ class _CurrentBudgetState extends State<CurrentBudget> {
                 ),
                 child: Center(
                     child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding: EdgeInsets.symmetric(horizontal: maxWidth * 0.0231), //10
                   child: StreamBuilder<QuerySnapshot>(
                     stream: income.snapshots(),
                     builder: (context, incomeSnapshot) {
@@ -90,7 +90,7 @@ class _CurrentBudgetState extends State<CurrentBudget> {
                                     .any((doc) => doc.id == _userAuth.uid)
                                 ? '${budgetSnapshot.data.docs.firstWhere((doc) => doc.id == _userAuth.uid).get('currentBudget')}\$'
                                 : '0\$',
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: maxHeight * 0.0220),
                           );
                         },
                       );

@@ -43,20 +43,33 @@ class ListItems extends StatelessWidget {
             ],
           )
         : Card(
-            margin: EdgeInsets.all(10),
+            margin: EdgeInsets.symmetric(
+              vertical: maxHeight * 0.0122,
+              horizontal: maxWidth * 0.0231,
+            ), //10
             child: ListTile(
               onTap: () {
                 print('id of this expense is ${selectedExpenses[index].id}');
               },
-              title: Text(selectedExpenses[index].title),
+              title: Text(
+                selectedExpenses[index].title,
+                style: TextStyle(
+                  fontSize: maxHeight * 0.0196,
+                ),
+              ),
               subtitle: Text(
-                  '${DateFormat("yMMMEd").format(selectedExpenses[index].date)} ${DateFormat("Hms").format(selectedExpenses[index].date)}'),
+                '${DateFormat("yMMMEd").format(selectedExpenses[index].date)} ${DateFormat("Hms").format(selectedExpenses[index].date)}',
+                style: TextStyle(fontSize: maxHeight * 0.0196),
+              ),
               tileColor: Colors.white,
               leading: CircleAvatar(
                 backgroundColor: Colors.orange,
                 foregroundColor: Colors.black,
                 child: Padding(
-                  padding: const EdgeInsets.all(10),
+                  padding: EdgeInsets.symmetric(
+                    vertical: maxHeight * 0.0122,
+                    horizontal: maxWidth * 0.0231,
+                  ), //10
                   child: FittedBox(
                     child: Text(
                       '${index + 1}',
@@ -71,7 +84,10 @@ class ListItems extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(10),
+                  padding: EdgeInsets.symmetric(
+                    vertical: maxHeight * 0.0122,
+                    horizontal: maxWidth * 0.0231,
+                  ), //10
                   child: Text(
                     '${selectedExpenses[index].cost}\$',
                     style: TextStyle(fontSize: maxHeight * 0.0196),

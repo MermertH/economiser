@@ -22,7 +22,10 @@ class _SelectedDayState extends State<SelectedDay> {
         borderRadius: BorderRadius.circular(14),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.symmetric(
+          horizontal: maxWidth * 0.0185,
+          vertical: maxHeight * 0.0098,
+        ), //8
         child: FittedBox(
           child: Container(
             decoration: BoxDecoration(
@@ -30,7 +33,10 @@ class _SelectedDayState extends State<SelectedDay> {
               color: Colors.orange,
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.symmetric(
+                horizontal: maxWidth * 0.0185,
+                vertical: maxHeight * 0.0098,
+              ), //8
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -52,19 +58,33 @@ class _SelectedDayState extends State<SelectedDay> {
         weekday.subtract(Duration(days: 7));
         return List.generate(7, (index) {
           return PopupMenuItem(
-            child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14),
-                  color: Colors.orange,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Center(
-                      child: Text('${DateFormat.EEEE().format(
-                    DateTime(weekday.year, weekday.month,
-                        DateTime.monday + index + 1),
-                  )}')),
-                )),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: maxWidth * 0.0185,
+                vertical: maxHeight * 0.0098,
+              ), //8
+              child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    color: Colors.orange,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: maxWidth * 0.0185,
+                      vertical: maxHeight * 0.0098,
+                    ), //8
+                    child: Center(
+                        child: Text(
+                      '${DateFormat.EEEE().format(
+                        DateTime(weekday.year, weekday.month,
+                            DateTime.monday + index + 1),
+                      )}',
+                      style: TextStyle(
+                        fontSize: maxHeight * 0.0196,
+                      ),
+                    )),
+                  )),
+            ),
             value: index +
                 1, // due to reversed function, index must be reverted too.
           );

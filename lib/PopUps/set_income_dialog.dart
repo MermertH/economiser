@@ -46,7 +46,7 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
       ),
       child: Container(
         height: maxHeight * 0.3676,
-        width: maxWidth * 0.4629,
+        width: maxWidth * 0.5787,
         child: Column(
           children: [
             Container(
@@ -132,7 +132,13 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
                   ),
                 ),
                 onPressed: () => _selectDate(context),
-                child: FittedBox(child: Text('Salary Date'))),
+                child: FittedBox(
+                    child: Text(
+                  'Salary Date',
+                  style: TextStyle(
+                    fontSize: maxHeight * 0.0196,
+                  ),
+                ))),
             Spacer(),
             StreamBuilder<QuerySnapshot>(
               stream: _incomes.snapshots(),
@@ -175,7 +181,13 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
                       Navigator.of(context).pop(true);
                     }
                   },
-                  child: FittedBox(child: Text('Submit')),
+                  child: FittedBox(
+                      child: Text(
+                    'Submit',
+                    style: TextStyle(
+                      fontSize: maxHeight * 0.0196,
+                    ),
+                  )),
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.amber,
                     primary: Colors.black,

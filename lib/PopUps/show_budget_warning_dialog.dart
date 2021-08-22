@@ -17,7 +17,10 @@ class BudgetWarningDialog extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: EdgeInsets.symmetric(
+                vertical: maxHeight * 0.0183,
+                horizontal: maxWidth * 0.0347,
+              ), //15
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.amber,
@@ -35,7 +38,10 @@ class BudgetWarningDialog extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: EdgeInsets.symmetric(
+                vertical: maxHeight * 0.0147,
+                horizontal: maxWidth * 0.0277,
+              ), //12
               child: Text(
                 'Your expenses exceed your budget, please bear that in mind!',
                 style: TextStyle(
