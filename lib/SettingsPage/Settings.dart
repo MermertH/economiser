@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var maxWidth = MediaQuery.of(context).size.width;
+    var maxHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.grey[800],
       appBar: AppBar(
         title: Text(
           'Settings',
-          style: TextStyle(fontSize: 24),
+          style: TextStyle(fontSize: maxHeight * 0.0294),
         ),
         centerTitle: true,
       ),
@@ -33,15 +35,15 @@ class SettingsPage extends StatelessWidget {
                     }
                   });
                 },
-                child: const Text('Logout'),
+                child: FittedBox(child: const Text('Logout')),
                 style: TextButton.styleFrom(
                     primary: Colors.black,
                     backgroundColor: Colors.amber,
                     shape: const BeveledRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(14)),
                     ),
-                    textStyle: const TextStyle(fontSize: 25),
-                    fixedSize: Size(200, 50)),
+                    textStyle: TextStyle(fontSize: maxHeight * 0.0306),
+                    fixedSize: Size(maxWidth * 0.4629, maxHeight * 0.0612)),
               ),
             ),
           ],

@@ -10,7 +10,7 @@ class InformativeDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Container(
-        height: 520,
+        height: 550,
         child: Column(
           children: [
             Row(
@@ -141,6 +141,18 @@ class InformativeDialog extends StatelessWidget {
                 ),
               ),
             ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              style: TextButton.styleFrom(
+                  backgroundColor: Colors.amberAccent,
+                  primary: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  )),
+              child: Text('Understood'),
+            )
           ],
         ),
       ),

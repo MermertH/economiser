@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 class BudgetWarningDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var maxWidth = MediaQuery.of(context).size.width;
+    var maxHeight = MediaQuery.of(context).size.height;
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
       backgroundColor: Theme.of(context).errorColor,
       child: Container(
-        height: 300,
+        height: maxHeight * 0.3676,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -22,11 +24,12 @@ class BudgetWarningDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  padding: EdgeInsets.symmetric(
+                      vertical: maxHeight * 0.0122,
+                      horizontal: maxWidth * 0.0462),
                   child: Icon(
                     Icons.warning,
-                    size: 60,
+                    size: maxHeight * 0.0735,
                   ),
                 ),
               ),
@@ -36,7 +39,7 @@ class BudgetWarningDialog extends StatelessWidget {
               child: Text(
                 'Your expenses exceed your budget, please bear that in mind!',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: maxHeight * 0.0245,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
@@ -52,7 +55,7 @@ class BudgetWarningDialog extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   )),
-              child: Text('Understood'),
+              child: FittedBox(child: Text('Understood')),
             )
           ],
         ),

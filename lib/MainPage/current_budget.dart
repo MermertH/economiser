@@ -18,10 +18,12 @@ class _CurrentBudgetState extends State<CurrentBudget> {
 
   @override
   Widget build(BuildContext context) {
+    var maxWidth = MediaQuery.of(context).size.width;
+    var maxHeight = MediaQuery.of(context).size.height;
     return Container(
-      height: 80,
+      height: maxHeight * 0.0980,
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(maxWidth * 0.0231),
         decoration: BoxDecoration(
           color: Colors.yellow,
           borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -29,10 +31,15 @@ class _CurrentBudgetState extends State<CurrentBudget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: Text(
-                'current budget',
-                style: TextStyle(fontSize: 18),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 5),
+              child: FittedBox(
+                child: Expanded(
+                  child: Text(
+                    'current budget',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
               ),
             ),
             Expanded(
@@ -83,12 +90,14 @@ class _CurrentBudgetState extends State<CurrentBudget> {
                             monthlyIncome(
                                 budgetSnapshot, income, incomeSnapshot);
                           }
-                          return Text(
-                            budgetSnapshot.data.docs
-                                    .any((doc) => doc.id == _userAuth.uid)
-                                ? '${budgetSnapshot.data.docs.firstWhere((doc) => doc.id == _userAuth.uid).get('currentBudget')}\$'
-                                : '0\$',
-                            style: TextStyle(fontSize: 18),
+                          return FittedBox(
+                            child: Text(
+                              budgetSnapshot.data.docs
+                                      .any((doc) => doc.id == _userAuth.uid)
+                                  ? '${budgetSnapshot.data.docs.firstWhere((doc) => doc.id == _userAuth.uid).get('currentBudget')}\$'
+                                  : '0\$',
+                              style: TextStyle(fontSize: 18),
+                            ),
                           );
                         },
                       );

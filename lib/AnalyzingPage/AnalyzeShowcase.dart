@@ -49,7 +49,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
   @override
   Widget build(BuildContext context) {
     final maxWidth = MediaQuery.of(context).size.width;
-    //final maxHeight = MediaQuery.of(context).size.height;
+    final maxHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.grey[800],
       appBar: AppBar(
@@ -189,6 +189,8 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                           builder: (context) => InformativeDialog());
                       print('selected day is $selectedDay');
                       print('selected week is $selectedWeek');
+                      print('max width: $maxWidth');
+                      print('max height: $maxHeight');
                     },
                     child: const Text('?'),
                   ),

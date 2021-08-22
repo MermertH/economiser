@@ -16,6 +16,8 @@ class _AddBudgetDialogState extends State<AddBudgetDialog> {
 
   @override
   Widget build(BuildContext context) {
+    var maxWidth = MediaQuery.of(context).size.width;
+    var maxHeight = MediaQuery.of(context).size.height;
     return Dialog(
       elevation: 5,
       backgroundColor: Colors.yellowAccent,
@@ -23,12 +25,12 @@ class _AddBudgetDialogState extends State<AddBudgetDialog> {
         borderRadius: BorderRadius.all(Radius.circular(14)),
       ),
       child: Container(
-        height: 250,
-        width: 200,
+        height: maxHeight * 0.3063,
+        width: maxWidth * 0.4629,
         child: Column(
           children: [
             Container(
-              height: 50,
+              height: maxHeight * 0.0612,
               decoration: BoxDecoration(
                   color: Colors.amber,
                   borderRadius: BorderRadius.only(
@@ -38,20 +40,20 @@ class _AddBudgetDialogState extends State<AddBudgetDialog> {
               child: Center(
                   child: Text(
                 'Add Budget',
-                style: TextStyle(fontSize: 22),
+                style: TextStyle(fontSize: maxHeight * 0.0269),
               )),
             ),
-            SizedBox(height: 15),
+            SizedBox(height: maxHeight * 0.0183),
             Text(
               'Please enter an amount to add',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: maxHeight * 0.0196),
             ),
             Spacer(),
             Stack(
               children: [
                 Container(
-                  width: 230,
-                  height: 50,
+                  width: maxWidth * 0.5324,
+                  height: maxHeight * 0.0612,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(
                       Radius.circular(14),
@@ -60,7 +62,7 @@ class _AddBudgetDialogState extends State<AddBudgetDialog> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 15),
+                  padding: EdgeInsets.only(left: maxWidth * 0.0347),
                   child: Form(
                     key: this._formKey,
                     child: TextFormField(
@@ -69,7 +71,7 @@ class _AddBudgetDialogState extends State<AddBudgetDialog> {
                       decoration: new InputDecoration(
                         hintText: '1000, 2000, 500, etc',
                         constraints: BoxConstraints(
-                          maxWidth: 200,
+                          maxWidth: maxWidth * 0.4629,
                         ),
                       ),
                       validator: (value) {
@@ -125,7 +127,7 @@ class _AddBudgetDialogState extends State<AddBudgetDialog> {
                       Navigator.of(context).pop(true);
                     }
                   },
-                  child: Text('Submit'),
+                  child: FittedBox(child: Text('Submit')),
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.amber,
                     primary: Colors.black,

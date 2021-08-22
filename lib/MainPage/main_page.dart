@@ -90,6 +90,8 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    var maxWidth = MediaQuery.of(context).size.width;
+    var maxHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -100,7 +102,8 @@ class _MainPageState extends State<MainPage> {
             AppLabel(),
             // monthly income and current budget
             Container(
-              margin: EdgeInsets.only(left: 50, top: 50),
+              margin: EdgeInsets.only(
+                  left: maxWidth * 0.1157, top: maxHeight * 0.0612),
               child: Row(
                 children: [
                   // monthly income
@@ -118,7 +121,7 @@ class _MainPageState extends State<MainPage> {
                   SizedBox(),
                   //Set Income Button
                   Padding(
-                    padding: const EdgeInsets.only(top: 40),
+                    padding: EdgeInsets.only(top: maxHeight * 0.0490),
                     child: TextButton(
                       onPressed: () {
                         showDialog(
@@ -129,9 +132,9 @@ class _MainPageState extends State<MainPage> {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text(
                                 'Income submitted successfully!',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 16,
+                                  fontSize: maxWidth * 0.0370,
                                 ),
                               ),
                               backgroundColor: Colors.amber,
@@ -146,8 +149,9 @@ class _MainPageState extends State<MainPage> {
                           shape: const BeveledRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(14)),
                           ),
-                          textStyle: const TextStyle(fontSize: 25),
-                          fixedSize: Size(200, 50)),
+                          textStyle: TextStyle(fontSize: maxHeight * 0.0306),
+                          fixedSize:
+                              Size(maxWidth * 0.4629, maxHeight * 0.0612)),
                     ),
                   ),
                   // Add Budget
@@ -178,8 +182,8 @@ class _MainPageState extends State<MainPage> {
                         shape: const BeveledRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(14)),
                         ),
-                        textStyle: const TextStyle(fontSize: 25),
-                        fixedSize: Size(200, 50)),
+                        textStyle: TextStyle(fontSize: maxHeight * 0.0306),
+                        fixedSize: Size(maxWidth * 0.4629, maxHeight * 0.0612)),
                   ),
                   //Add Expense Button
                   TextButton(
@@ -212,8 +216,8 @@ class _MainPageState extends State<MainPage> {
                         shape: const BeveledRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(14)),
                         ),
-                        textStyle: const TextStyle(fontSize: 25),
-                        fixedSize: Size(200, 50)),
+                        textStyle: TextStyle(fontSize: maxHeight * 0.0306),
+                        fixedSize: Size(maxWidth * 0.4629, maxHeight * 0.0612)),
                   ),
                   //Analyze Showcase Button
                   TextButton(
@@ -233,8 +237,8 @@ class _MainPageState extends State<MainPage> {
                         shape: const BeveledRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(14)),
                         ),
-                        textStyle: const TextStyle(fontSize: 25),
-                        fixedSize: Size(200, 80)),
+                        textStyle: TextStyle(fontSize: maxHeight * 0.0306),
+                        fixedSize: Size(maxWidth * 0.4629, maxHeight * 0.0980)),
                   ),
                   //Settings Button
                   TextButton(
@@ -252,10 +256,10 @@ class _MainPageState extends State<MainPage> {
                         shape: const BeveledRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(14)),
                         ),
-                        textStyle: const TextStyle(fontSize: 25),
-                        fixedSize: Size(200, 50)),
+                        textStyle: TextStyle(fontSize: maxHeight * 0.0306),
+                        fixedSize: Size(maxWidth * 0.4629, maxHeight * 0.0612)),
                   ),
-                  const SizedBox(height: 70),
+                  SizedBox(height: maxHeight * 0.0857),
                 ],
               ),
             ),

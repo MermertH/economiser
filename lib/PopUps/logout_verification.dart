@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 class LogoutVerificationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+   //var maxWidth = MediaQuery.of(context).size.width;
+    var maxHeight = MediaQuery.of(context).size.height;
     return Dialog(
       backgroundColor: Colors.amber,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
       child: Container(
-        height: 300,
+        height: maxHeight * 0.3676,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -30,10 +32,10 @@ class LogoutVerificationDialog extends StatelessWidget {
                       clipBehavior: Clip.hardEdge,
                       child: CircleAvatar(
                         backgroundColor: Colors.amber[200],
-                        radius: 60,
+                        radius: maxHeight * 0.0735,
                         child: Icon(
                           Icons.no_accounts_rounded,
-                          size: 60,
+                          size: maxHeight * 0.0735,
                         ),
                       ),
                     ),
@@ -42,7 +44,7 @@ class LogoutVerificationDialog extends StatelessWidget {
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
                         'Are you sure that you want to logout?',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: maxHeight * 0.0220),
                       ),
                     )),
                   ],
@@ -57,7 +59,7 @@ class LogoutVerificationDialog extends StatelessWidget {
                     style: TextButton.styleFrom(
                         primary: Colors.black,
                         textStyle: TextStyle(
-                          fontSize: 16,
+                          fontSize: maxHeight * 0.0196,
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
@@ -65,7 +67,7 @@ class LogoutVerificationDialog extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop(false);
                     },
-                    child: Text('Cancel'),
+                    child: FittedBox(child: Text('Cancel')),
                   ),
                 ),
                 Expanded(
@@ -73,7 +75,7 @@ class LogoutVerificationDialog extends StatelessWidget {
                     style: TextButton.styleFrom(
                         primary: Colors.black,
                         textStyle: TextStyle(
-                          fontSize: 16,
+                          fontSize: maxHeight * 0.0196,
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
@@ -82,7 +84,7 @@ class LogoutVerificationDialog extends StatelessWidget {
                       FirebaseAuth.instance.signOut();
                       Navigator.of(context).pop(true);
                     },
-                    child: Text('Logout'),
+                    child: FittedBox(child: Text('Logout')),
                   ),
                 ),
               ],

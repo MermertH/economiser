@@ -8,12 +8,14 @@ class MonthlyIncome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var maxWidth = MediaQuery.of(context).size.width;
+    var maxHeight = MediaQuery.of(context).size.height;
     var _userAuth = FirebaseAuth.instance.currentUser;
     return Container(
-      margin: EdgeInsets.only(right: 40),
-      height: 80,
+      margin: EdgeInsets.only(right: maxWidth * 0.0925),
+      height: maxHeight * 0.0980,
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(maxWidth * 0.0231),
         decoration: BoxDecoration(
           color: Colors.yellow,
           borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -21,10 +23,15 @@ class MonthlyIncome extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: Text(
-                'Monthly Income',
-                style: TextStyle(fontSize: 18),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 5),
+              child: FittedBox(
+                child: Expanded(
+                  child: Text(
+                    'Monthly Income',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
               ),
             ),
             Expanded(
@@ -50,12 +57,14 @@ class MonthlyIncome extends StatelessWidget {
                           ),
                         );
                       }
-                      return Text(
-                        snapshot.data.docs
-                                .any((doc) => doc.id == _userAuth.uid)
-                            ? '${snapshot.data.docs.firstWhere((doc) => doc.id == _userAuth.uid).get('income')}\$'
-                            : '0\$',
-                        style: TextStyle(fontSize: 18),
+                      return FittedBox(
+                        child: Text(
+                          snapshot.data.docs
+                                  .any((doc) => doc.id == _userAuth.uid)
+                              ? '${snapshot.data.docs.firstWhere((doc) => doc.id == _userAuth.uid).get('income')}\$'
+                              : '0\$',
+                          style: TextStyle(fontSize: 18),
+                        ),
                       );
                     },
                   ),

@@ -19,6 +19,8 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
 
   @override
   Widget build(BuildContext context) {
+    var maxWidth = MediaQuery.of(context).size.width;
+    var maxHeight = MediaQuery.of(context).size.height;
     return Dialog(
       elevation: 5,
       backgroundColor: Colors.yellowAccent,
@@ -26,12 +28,12 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
         borderRadius: BorderRadius.all(Radius.circular(14)),
       ),
       child: Container(
-        height: 350,
-        width: 250,
+        height: maxHeight * 0.4289,
+        width: maxWidth * 0.5787,
         child: Column(
           children: [
             Container(
-              height: 50,
+              height: maxHeight * 0.0612,
               decoration: BoxDecoration(
                   color: Colors.amber,
                   borderRadius: BorderRadius.only(
@@ -41,17 +43,17 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
               child: Center(
                   child: Text(
                 'Add Expense',
-                style: TextStyle(fontSize: 22),
+                style: TextStyle(fontSize: maxHeight * 0.0269),
               )),
             ),
-            SizedBox(height: 15),
+            SizedBox(height: maxHeight * 0.0183),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: EdgeInsets.symmetric(horizontal: maxWidth * 0.0185),
               child: Text(
                 'Please enter the name and cost of your expense',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: maxHeight * 0.0196,
                 ),
               ),
             ),
@@ -64,8 +66,8 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                   Stack(
                     children: [
                       Container(
-                        width: 230,
-                        height: 50,
+                        width: maxWidth * 0.5324,
+                        height: maxHeight * 0.0612,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(
                             Radius.circular(14),
@@ -74,14 +76,14 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 15),
+                        padding: EdgeInsets.only(left: maxWidth * 0.0347),
                         child: TextFormField(
                           key: ValueKey('Expense Name'),
                           keyboardType: TextInputType.text,
                           decoration: new InputDecoration(
                             hintText: 'tax, bill, shopping, etc',
                             constraints: BoxConstraints(
-                              maxWidth: 200,
+                              maxWidth: maxWidth * 0.4629,
                             ),
                           ),
                           validator: (value) {
@@ -104,13 +106,13 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 15),
+                  SizedBox(height: maxHeight * 0.0183),
                   // cost of the expense
                   Stack(
                     children: [
                       Container(
-                        width: 230,
-                        height: 50,
+                        width: maxWidth * 0.5324,
+                        height: maxHeight * 0.0612,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(
                             Radius.circular(14),
@@ -119,7 +121,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 15),
+                        padding: EdgeInsets.only(left: maxWidth * 0.0347),
                         child: Column(
                           children: [
                             TextFormField(
@@ -128,7 +130,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                               decoration: new InputDecoration(
                                 hintText: '1000, 2000, 500, etc',
                                 constraints: BoxConstraints(
-                                  maxWidth: 200,
+                                  maxWidth: maxWidth * 0.4629,
                                 ),
                               ),
                               validator: (value) {
@@ -191,7 +193,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                               Navigator.of(context).pop(true);
                             }
                           },
-                          child: Text('Submit'),
+                          child: FittedBox(child: Text('Submit')),
                           style: TextButton.styleFrom(
                             backgroundColor: Colors.amber,
                             primary: Colors.black,

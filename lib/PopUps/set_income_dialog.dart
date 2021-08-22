@@ -10,7 +10,8 @@ class SetIncomeDialog extends StatefulWidget {
 
 class _SetIncomeDialogState extends State<SetIncomeDialog> {
   // firebase references.
-  CollectionReference _incomes = FirebaseFirestore.instance.collection('Income');
+  CollectionReference _incomes =
+      FirebaseFirestore.instance.collection('Income');
   var _userAuth = FirebaseAuth.instance.currentUser;
 
   // validation key.
@@ -34,6 +35,8 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
 
   @override
   Widget build(BuildContext context) {
+    var maxWidth = MediaQuery.of(context).size.width;
+    var maxHeight = MediaQuery.of(context).size.height;
     String input;
     return Dialog(
       elevation: 5,
@@ -42,12 +45,12 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
         borderRadius: BorderRadius.all(Radius.circular(14)),
       ),
       child: Container(
-        height: 300,
-        width: 200,
+        height: maxHeight * 0.3676,
+        width: maxWidth * 0.4629,
         child: Column(
           children: [
             Container(
-              height: 50,
+              height: maxHeight * 0.0612,
               decoration: BoxDecoration(
                   color: Colors.amber,
                   borderRadius: BorderRadius.only(
@@ -57,20 +60,20 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
               child: Center(
                   child: Text(
                 'Set Income',
-                style: TextStyle(fontSize: 22),
+                style: TextStyle(fontSize: maxHeight * 0.0269),
               )),
             ),
-            SizedBox(height: 15),
+            SizedBox(height: maxHeight * 0.0183),
             Text(
               'Please enter your monthly income',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: maxHeight * 0.0196),
             ),
             Spacer(),
             Stack(
               children: [
                 Container(
-                  width: 230,
-                  height: 50,
+                  width: maxWidth * 0.5324,
+                  height: maxHeight * 0.0612,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(
                       Radius.circular(14),
@@ -79,7 +82,7 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 15),
+                  padding: EdgeInsets.only(left: maxWidth * 0.0347),
                   child: Form(
                     key: this._formKey,
                     child: TextFormField(
@@ -88,7 +91,7 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
                       decoration: new InputDecoration(
                         hintText: '1000, 2000, 500, etc',
                         constraints: BoxConstraints(
-                          maxWidth: 200,
+                          maxWidth: maxWidth * 0.4629,
                         ),
                       ),
                       validator: (value) {
@@ -129,7 +132,7 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
                   ),
                 ),
                 onPressed: () => _selectDate(context),
-                child: Text('Salary Date')),
+                child: FittedBox(child: Text('Salary Date'))),
             Spacer(),
             StreamBuilder<QuerySnapshot>(
               stream: _incomes.snapshots(),
@@ -172,7 +175,7 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
                       Navigator.of(context).pop(true);
                     }
                   },
-                  child: Text('Submit'),
+                  child: FittedBox(child: Text('Submit')),
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.amber,
                     primary: Colors.black,
