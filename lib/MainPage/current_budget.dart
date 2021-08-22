@@ -31,15 +31,10 @@ class _CurrentBudgetState extends State<CurrentBudget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5),
-              child: FittedBox(
-                child: Expanded(
-                  child: Text(
-                    'current budget',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
+            Expanded(
+              child: Text(
+                'current budget',
+                style: TextStyle(fontSize: 18),
               ),
             ),
             Expanded(
@@ -90,14 +85,12 @@ class _CurrentBudgetState extends State<CurrentBudget> {
                             monthlyIncome(
                                 budgetSnapshot, income, incomeSnapshot);
                           }
-                          return FittedBox(
-                            child: Text(
-                              budgetSnapshot.data.docs
-                                      .any((doc) => doc.id == _userAuth.uid)
-                                  ? '${budgetSnapshot.data.docs.firstWhere((doc) => doc.id == _userAuth.uid).get('currentBudget')}\$'
-                                  : '0\$',
-                              style: TextStyle(fontSize: 18),
-                            ),
+                          return Text(
+                            budgetSnapshot.data.docs
+                                    .any((doc) => doc.id == _userAuth.uid)
+                                ? '${budgetSnapshot.data.docs.firstWhere((doc) => doc.id == _userAuth.uid).get('currentBudget')}\$'
+                                : '0\$',
+                            style: TextStyle(fontSize: 18),
                           );
                         },
                       );

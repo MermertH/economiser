@@ -23,15 +23,10 @@ class MonthlyIncome extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5),
-              child: FittedBox(
-                child: Expanded(
-                  child: Text(
-                    'Monthly Income',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
+            Expanded(
+              child: Text(
+                'Monthly Income',
+                style: TextStyle(fontSize: 18),
               ),
             ),
             Expanded(

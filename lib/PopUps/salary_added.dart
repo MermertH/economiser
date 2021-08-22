@@ -27,7 +27,7 @@ class _SalaryAddedDialogState extends State<SalaryAddedDialog> {
 
   @override
   Widget build(BuildContext context) {
-    var maxWidth = MediaQuery.of(context).size.width;
+    //var maxWidth = MediaQuery.of(context).size.width;
     var maxHeight = MediaQuery.of(context).size.height;
     return Dialog(
       backgroundColor: Colors.amber,

@@ -13,14 +13,12 @@ class AppLabel extends StatelessWidget {
           color: Theme.of(context).primaryColor,
         ),
         child: Center(
-          child: FittedBox(
-            child: Text(
-              "ECONOMISER",
-              style: TextStyle(
-                  fontSize: maxHeight * 0.0490,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[800]),
-            ),
+          child: Text(
+            "ECONOMISER",
+            style: TextStyle(
+                fontSize: maxHeight * 0.0490,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[800]),
           ),
         ),
       ),
