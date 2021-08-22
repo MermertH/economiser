@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economiser/AnalyzingPage/cost_of_day.dart';
 import 'package:economiser/AnalyzingPage/selected_day.dart';
 import 'package:economiser/AnalyzingPage/selected_week.dart';
+import 'package:economiser/PopUps/informative_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -183,14 +184,11 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                       ),
                     ),
                     onPressed: () {
-                      // print('Max Width: $maxWidth');
-                      // print('Max Height: $maxHeight');
-                      // final months = Jiffy().subtract(months: 6);
-                      // print('${months.add(months: 1).MMM}');
+                      showDialog(
+                          context: context,
+                          builder: (context) => InformativeDialog());
                       print('selected day is $selectedDay');
                       print('selected week is $selectedWeek');
-                      // print(
-                      //     'selected day is ${DateFormat.EEEE().format(DateTime(currentTime.year, currentTime.month, currentTime.day + selectedDay - 1))}');
                     },
                     child: const Text('?'),
                   ),
