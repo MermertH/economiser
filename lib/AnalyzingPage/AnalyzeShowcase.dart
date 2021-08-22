@@ -123,13 +123,11 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                                     child: Text('...Loading...'),
                                   );
                                 }
-                                return FittedBox(
-                                  child: Text(
-                                    'Total Expense: ${getTheCostOfTheMonth(snapshot)}\$',
-                                    style: TextStyle(
-                                        fontSize: maxHeight * 0.0196,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                return Text(
+                                  'Total Expense: ${getTheCostOfTheMonth(snapshot)}\$',
+                                  style: TextStyle(
+                                      fontSize: maxHeight * 0.0147,
+                                      fontWeight: FontWeight.bold),
                                 );
                               }),
                         ),

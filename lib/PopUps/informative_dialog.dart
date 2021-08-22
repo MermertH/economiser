@@ -82,10 +82,7 @@ class InformativeDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: maxHeight * 0.0122,
-                    horizontal: maxWidth * 0.0231,
-                  ), // 10
+                  padding: const EdgeInsets.all(2.0),
                   child: Text(
                     'This page is intended to show you how much you have spent on a month, '
                     'with the functionality of selecting to see in which week and day.',
@@ -109,10 +106,7 @@ class InformativeDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: maxHeight * 0.0122,
-                    horizontal: maxWidth * 0.0231,
-                  ), //10
+                  padding: const EdgeInsets.all(2.0),
                   child: Text(
                     'From the top right button, you can select which week data to show. '
                     'Also the button with three vertical dots which also contains "Days" in it allows you to '
@@ -137,10 +131,7 @@ class InformativeDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: maxHeight * 0.0122,
-                    horizontal: maxWidth * 0.0231,
-                  ), //10
+                  padding: const EdgeInsets.all(2.0),
                   child: Text(
                     'Total Expense in right top will show monthly total expense data',
                     textAlign: TextAlign.center,
@@ -163,10 +154,7 @@ class InformativeDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: maxHeight * 0.0122,
-                    horizontal: maxWidth * 0.0231,
-                  ), // 10
+                  padding: const EdgeInsets.all(2.0),
                   child: Text(
                     'Graphical data shown in the upper side only shows the weekly data and can be changed '
                     'by selecting desired week',
@@ -190,10 +178,7 @@ class InformativeDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: maxHeight * 0.0122,
-                    horizontal: maxWidth * 0.0231,
-                  ), //10
+                  padding: const EdgeInsets.all(2.0),
                   child: Text(
                     'You can remove any expense you have added by swiping them to right or left. '
                     'this move will refund your budget',
