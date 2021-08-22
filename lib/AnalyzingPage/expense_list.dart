@@ -17,7 +17,9 @@ class ExpenseList extends StatefulWidget {
 class _ExpenseListState extends State<ExpenseList> {
   final CollectionReference expenses =
       FirebaseFirestore.instance.collection('Expenses');
-      var _userAuth = FirebaseAuth.instance.currentUser;
+  final CollectionReference _refundBudget =
+      FirebaseFirestore.instance.collection('Budget');
+  var _userAuth = FirebaseAuth.instance.currentUser;
   List<Expenses> currentList = [];
   final rng = new Random();
   bool isSuccessful;
@@ -35,15 +37,14 @@ class _ExpenseListState extends State<ExpenseList> {
             borderRadius: BorderRadius.all(Radius.circular(14)),
           ),
           child: StreamBuilder<QuerySnapshot>(
-              stream: expenses
-                  .doc(_userAuth.uid)
-                  .collection('Expense')
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
+              stream:
+                  expenses.doc(_userAuth.uid).collection('Expense').snapshots(),
+              builder: (context, expenseSnapshot) {
+                if (expenseSnapshot.hasError) {
                   return Text('Something went wrong');
                 }
-                if (snapshot.connectionState == ConnectionState.waiting) {
+                if (expenseSnapshot.connectionState ==
+                    ConnectionState.waiting) {
                   return Center(
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
@@ -54,15 +55,35 @@ class _ExpenseListState extends State<ExpenseList> {
                   );
                 }
                 currentList = selectedExpenses(
-                    snapshot, widget.selectedDay, widget.selectedWeek);
+                    expenseSnapshot, widget.selectedDay, widget.selectedWeek);
 
                 return ListView.builder(
-                  itemCount: currentList.length,
-                  itemBuilder: (context, index) => ListItems(
-                    index,
-                    currentList,
-                  ),
-                );
+                    itemCount: currentList.length,
+                    itemBuilder: (context, index) {
+                      return currentList[index].id != null
+                          ? Dismissible(
+                              key: ValueKey(index),
+                              child: ListItems(
+                                index,
+                                currentList,
+                              ),
+                              onDismissed: (direction) {
+                                _refundBudget.doc(_userAuth.uid).update({
+                                  'currentBudget': FieldValue.increment(
+                                      currentList[index].cost),
+                                });
+                                expenses
+                                    .doc(_userAuth.uid)
+                                    .collection('Expense')
+                                    .doc(currentList[index].id)
+                                    .delete();
+                              },
+                            )
+                          : ListItems(
+                              index,
+                              currentList,
+                            );
+                    });
               }),
         ),
       ),
@@ -81,7 +102,7 @@ class _ExpenseListState extends State<ExpenseList> {
           cost: snapshot.data.docs[i].get('expenseCost'),
           date: addingDate.toDate(),
           title: snapshot.data.docs[i].get('expenseName'),
-          id: '${rng.nextInt(999999999)}',
+          id: '${snapshot.data.docs[i].id}',
         ));
         isSuccessful = true;
       }
