@@ -53,9 +53,9 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
     return Scaffold(
       backgroundColor: Colors.grey[800],
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Analyze Showcase',
-          style: TextStyle(fontSize: 24),
+          style: TextStyle(fontSize: maxHeight * 0.0294),
         ),
         centerTitle: true,
         actions: [
@@ -82,15 +82,17 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(14.0),
-                          child: Text(
-                            "${dayIsSelected == false ? DateFormat.EEEE().format(currentTime) : DateFormat.EEEE().format(DateTime(
-                                    currentTime.year,
-                                    currentTime.month,
-                                    DateTime.monday + selectedDay,
-                                  ))}, " +
-                                "$selectedWeek, " +
-                                "${DateFormat.MMMM().format(currentTime)}",
-                            style: const TextStyle(fontSize: 18),
+                          child: FittedBox(
+                            child: Text(
+                              "${dayIsSelected == false ? DateFormat.EEEE().format(currentTime) : DateFormat.EEEE().format(DateTime(
+                                      currentTime.year,
+                                      currentTime.month,
+                                      DateTime.monday + selectedDay,
+                                    ))}, " +
+                                  "$selectedWeek, " +
+                                  "${DateFormat.MMMM().format(currentTime)}",
+                              style: TextStyle(fontSize: maxHeight * 0.0220),
+                            ),
                           ),
                         ),
                         Padding(
@@ -112,11 +114,13 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                                     child: Text('...Loading...'),
                                   );
                                 }
-                                return Text(
-                                  'Total Expense: ${getTheCostOfTheMonth(snapshot)}\$',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
+                                return FittedBox(
+                                  child: Text(
+                                    'Total Expense: ${getTheCostOfTheMonth(snapshot)}\$',
+                                    style: TextStyle(
+                                        fontSize: maxHeight * 0.0196,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 );
                               }),
                         ),
@@ -124,11 +128,11 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                     ),
                     Container(
                       width: maxWidth,
-                      height: 5,
+                      height: maxHeight * 0.0061,
                       color: Colors.grey[850],
                     ),
                     Container(
-                      height: 200,
+                      height: maxHeight * 0.2450,
                       color: Colors.white,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -138,7 +142,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                     ),
                     Container(
                       width: maxWidth,
-                      height: 5,
+                      height: maxHeight * 0.0061,
                       color: Colors.grey[850],
                     ),
                     Row(
@@ -154,7 +158,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
           Padding(
             padding: const EdgeInsets.all(10),
             child: Container(
-              height: 60,
+              height: maxHeight * 0.0735,
               decoration: const BoxDecoration(
                 color: Colors.amber,
                 borderRadius: BorderRadius.all(Radius.circular(14)),
@@ -165,12 +169,14 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                   // day selection PopupMenuButton.
                   SelectedDay(selectedDay: currentSelectedDay),
                   Padding(
-                    padding: const EdgeInsets.only(right: 25),
-                    child: const Text(
-                      'Expenses',
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
+                    padding: EdgeInsets.only(right: maxWidth * 0.0578),
+                    child: FittedBox(
+                      child: Text(
+                        'Expenses',
+                        style: TextStyle(
+                          fontSize: maxHeight * 0.0269,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -179,8 +185,8 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                       shape: const CircleBorder(),
                       backgroundColor: Colors.orange,
                       primary: Colors.black,
-                      textStyle: const TextStyle(
-                        fontSize: 30,
+                      textStyle: TextStyle(
+                        fontSize: maxHeight * 0.0367,
                       ),
                     ),
                     onPressed: () {

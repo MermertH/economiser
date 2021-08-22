@@ -12,26 +12,29 @@ class ListItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final maxWidth = MediaQuery.of(context).size.width;
+    final maxHeight = MediaQuery.of(context).size.height;
     return selectedExpenses.first.id == null
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                margin: EdgeInsets.only(top: 50),
+                margin: EdgeInsets.only(top: maxHeight * 0.0612),
                 // color: Colors.orange,
-                height: 200,
-                width: 200,
+                height: maxHeight * 0.2450,
+                width: maxWidth * 0.4629,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.warning,
-                      size: 60,
+                      size: maxHeight * 0.0735,
                     ),
                     Center(
                       child: Text(
                         'No Expense Found',
-                        style: TextStyle(color: Colors.black, fontSize: 20),
+                        style: TextStyle(
+                            color: Colors.black, fontSize: maxHeight * 0.0245),
                       ),
                     ),
                   ],
@@ -57,7 +60,7 @@ class ListItems extends StatelessWidget {
                   child: FittedBox(
                     child: Text(
                       '${index + 1}',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: maxHeight * 0.0245),
                     ),
                   ),
                 ),
@@ -71,7 +74,7 @@ class ListItems extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: Text(
                     '${selectedExpenses[index].cost}\$',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: maxHeight * 0.0196),
                   ),
                 ),
               ),

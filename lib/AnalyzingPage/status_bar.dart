@@ -16,8 +16,10 @@ class StatusBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final maxWidth = MediaQuery.of(context).size.width;
+    final maxHeight = MediaQuery.of(context).size.height;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: maxWidth * 0.0370),
       child: StreamBuilder<QuerySnapshot>(
           stream: expenses.doc(_userAuth.uid).collection('Expense').snapshots(),
           builder: (context, snapshot) {
@@ -26,13 +28,13 @@ class StatusBar extends StatelessWidget {
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Container(
-                height: 200,
-                width: 20,
+                height: maxHeight * 0.2450,
+                width: maxWidth * 0.0462,
               );
             }
             return Container(
-              height: 200,
-              width: 20,
+              height: maxHeight * 0.2450,
+              width: maxWidth * 0.0462,
               child: Stack(
                 children: <Widget>[
                   Container(

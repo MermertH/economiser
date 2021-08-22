@@ -23,25 +23,27 @@ class _SelectedDayState extends State<SelectedDay> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            color: Colors.orange,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(
-                  Icons.more_vert,
-                  size: 30,
-                ),
-                Text(
-                  'Days',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
+        child: FittedBox(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              color: Colors.orange,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(
+                    Icons.more_vert,
+                    size: maxHeight * 0.0367,
+                  ),
+                  Text(
+                    'Days',
+                    style: TextStyle(fontSize: maxHeight * 0.0220),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 class InformativeDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //var maxWidth = MediaQuery.of(context).size.width;
+    var maxHeight = MediaQuery.of(context).size.height;
     return Dialog(
       backgroundColor: Colors.amber[700],
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
       child: Container(
-        height: 550,
+        height: maxHeight * 0.6740,
         child: Column(
           children: [
             Row(
@@ -33,10 +35,12 @@ class InformativeDialog extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        'Page Information',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      child: FittedBox(
+                        child: Text(
+                          'Page Information',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),
@@ -46,7 +50,7 @@ class InformativeDialog extends StatelessWidget {
                   foregroundColor: Colors.orange[900],
                   child: Icon(
                     Icons.info_rounded,
-                    size: 30,
+                    size: maxHeight * 0.0367,
                   ),
                 ),
               ],
@@ -151,7 +155,7 @@ class InformativeDialog extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   )),
-              child: Text('Understood'),
+              child: FittedBox(child: Text('Understood')),
             )
           ],
         ),

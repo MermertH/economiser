@@ -18,12 +18,14 @@ class CostOfDay extends StatefulWidget {
 class _CostOfDayState extends State<CostOfDay> {
   final CollectionReference expenseCosts =
       FirebaseFirestore.instance.collection('Expenses');
-      var _userAuth = FirebaseAuth.instance.currentUser;
+  var _userAuth = FirebaseAuth.instance.currentUser;
   final daysOfWeek = DateTime.now();
   bool isExist;
 
   @override
   Widget build(BuildContext context) {
+    final maxWidth = MediaQuery.of(context).size.width;
+    //final maxHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -37,7 +39,7 @@ class _CostOfDayState extends State<CostOfDay> {
             ))}'),
           ),
           Container(
-            width: 40,
+            width: maxWidth * 0.0925,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
               color: Colors.orange,
@@ -63,14 +65,16 @@ class _CostOfDayState extends State<CostOfDay> {
                           child: Text('...'),
                         );
                       }
-                      return Text(
-                        '${getTheCostOfDay(
-                          snapshot,
-                          widget.index,
-                          widget.selectedWeek,
-                        )}\$',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                      return FittedBox(
+                        child: Text(
+                          '${getTheCostOfDay(
+                            snapshot,
+                            widget.index,
+                            widget.selectedWeek,
+                          )}\$',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
                       );
                     }),
               ),

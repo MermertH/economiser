@@ -20,7 +20,7 @@ class _SelectedWeekState extends State<SelectedWeek> {
         ),
         onSelected: (value) {
           print('Week $value is selected');
-            widget.selectedWeek('Q$value');    
+          widget.selectedWeek('Q$value');
         },
         // initialValue: Jiffy().quarter,
         itemBuilder: (context) {
@@ -34,7 +34,8 @@ class _SelectedWeekState extends State<SelectedWeek> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Center(child: Text('Week ${index + 1}')),
+                  child: Center(
+                      child: FittedBox(child: Text('Week ${index + 1}'))),
                 ),
               ),
             );

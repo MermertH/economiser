@@ -35,6 +35,8 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
 
   @override
   Widget build(BuildContext context) {
+    var maxWidth = MediaQuery.of(context).size.width;
+    var maxHeight = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -46,7 +48,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
           title: Text(
             'Economiser',
             style: TextStyle(
-              fontSize: 25,
+              fontSize: maxHeight * 0.0306,
             ),
           ),
           centerTitle: true,
@@ -56,27 +58,29 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
           children: [
             CircleAvatar(
               backgroundColor: Colors.orange,
-              radius: 60,
+              radius: maxHeight * 0.0735,
               child: FittedBox(
                 child: Icon(
                   Icons.account_balance,
-                  size: 60,
+                  size: maxHeight * 0.0735,
                   color: Colors.grey[850],
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(vertical: maxHeight * 0.0122),
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.orange[400],
                     borderRadius: BorderRadius.circular(20)),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Welcome To Economiser',
-                    style: TextStyle(
-                      fontSize: 30,
+                  child: FittedBox(
+                    child: Text(
+                      'Welcome To Economiser',
+                      style: TextStyle(
+                        fontSize: maxHeight * 0.0367,
+                      ),
                     ),
                   ),
                 ),
@@ -97,7 +101,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(height: 45.0),
+                        SizedBox(height: maxHeight * 0.0551),
                         TextFormField(
                           key: ValueKey('email'),
                           validator: (value) {
@@ -111,8 +115,11 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                             _userMail = value;
                           },
                           decoration: InputDecoration(
-                              contentPadding:
-                                  EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                              contentPadding: EdgeInsets.fromLTRB(
+                                  maxWidth * 0.0462,
+                                  maxHeight * 0.0183,
+                                  maxWidth * 0.0462,
+                                  maxHeight * 0.0183),
                               hintText: "Email",
                               hintStyle: TextStyle(
                                 color: Colors.black,
@@ -120,7 +127,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(32.0))),
                         ),
-                        SizedBox(height: 25.0),
+                        SizedBox(height: maxHeight * 0.0306),
                         TextFormField(
                           key: ValueKey('password'),
                           validator: (value) {
@@ -135,8 +142,11 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                           },
                           obscureText: true,
                           decoration: InputDecoration(
-                              contentPadding:
-                                  EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                              contentPadding: EdgeInsets.fromLTRB(
+                                  maxWidth * 0.0462,
+                                  maxHeight * 0.0183,
+                                  maxWidth * 0.0462,
+                                  maxHeight * 0.0183),
                               hintText: "Password",
                               hintStyle: TextStyle(
                                 color: Colors.black,
@@ -144,7 +154,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(32.0))),
                         ),
-                        SizedBox(height: 35.0),
+                        SizedBox(height: maxHeight * 0.0428),
                         if (widget.isLoading) CircularProgressIndicator(),
                         if (!widget.isLoading)
                           TextButton(
@@ -158,9 +168,14 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                               ),
                               backgroundColor: Colors.orange,
                             ),
-                            child: Text(_islogin ? 'Login' : 'SignUp'),
+                            child: FittedBox(
+                                child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: maxWidth * 0.0694),
+                              child: Text(_islogin ? 'Login' : 'SignUp'),
+                            )),
                           ),
-                        SizedBox(height: 15),
+                        SizedBox(height: maxHeight * 0.0183),
                         if (!widget.isLoading)
                           GestureDetector(
                             onTap: () {
@@ -168,9 +183,11 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                                 _islogin = !_islogin;
                               });
                             },
-                            child: Text(_islogin
-                                ? 'Don\'t have an account? Press here to sign in'
-                                : 'have an account? Press here to login'),
+                            child: FittedBox(
+                              child: Text(_islogin
+                                  ? 'Don\'t have an account? Press here to sign in'
+                                  : 'Have an account? Press here to login'),
+                            ),
                           ),
                       ],
                     ),
@@ -187,11 +204,13 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    'Please enter your email and password to login or sign up',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
+                  child: FittedBox(
+                    child: Text(
+                      'Please enter your email and password to login or sign up',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: maxHeight * 0.0196,
+                      ),
                     ),
                   ),
                 ),

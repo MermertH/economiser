@@ -110,20 +110,3 @@ class _ExpenseListState extends State<ExpenseList> {
     return isSuccessful ? list : [Expenses(id: null)];
   }
 }
-
-// print('${(snapshot.data.docs[3].get('expenseName'))}');
-// print('selected day is ${widget.selectedDay}');
-// print('selected week is ${widget.selectedWeek}');
-// for (int i = 0; i < snapshot.data.docs.length; i++) {
-//   desiredDate = snapshot.data.docs[i].get('addingDate');
-//   if (desiredDate.toDate().weekday ==
-//           widget.selectedDay &&
-//       DateFormat.QQQ().format(desiredDate.toDate()) ==
-//           widget.selectedWeek) {
-//     print('it is desired date $i');
-//   } else {
-//     print('it is not the desired date');
-//   }
-// }
-// desiredDate = snapshot.data.docs.first.get('addingDate');
-// print('desired date is ${desiredDate.toDate()}');
