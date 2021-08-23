@@ -12,7 +12,7 @@ class InformativeDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Container(
-        height: maxHeight * 0.8,
+        height: maxHeight * 0.7965,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -82,7 +82,7 @@ class InformativeDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(2.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: Text(
                     'This page is intended to show you how much you have spent on a month, '
                     'with the functionality of selecting to see in which day.',
@@ -106,7 +106,7 @@ class InformativeDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(2.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: Text(
                     'The button with three vertical dots which also contains "Days" in it allows you to '
                     'select desired day to show what is bought  in what date and how much it costs.',
@@ -177,7 +177,7 @@ class InformativeDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(2.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: Text(
                     'You can remove any expense you have added by swiping them to right or left. '
                     'this move will refund your budget',
