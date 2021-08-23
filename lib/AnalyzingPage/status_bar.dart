@@ -63,7 +63,7 @@ class StatusBar extends StatelessWidget {
     double totalCostOfDay = 0;
     for (int i = 0; i < snapshot.data.docs.length; i++) {
       Timestamp gatheredDate = snapshot.data.docs[i].get('addingDate');
-      if (DateFormat.QQQ().format(gatheredDate.toDate()) == selectedWeek &&
+      if (currentWeekOfMonthCalculator(gatheredDate.toDate()) == selectedWeek &&
           gatheredDate.toDate().weekday == (index + 1)) {
         totalCostOfDay += snapshot.data.docs[i].get('expenseCost');
       }
@@ -80,10 +80,29 @@ class StatusBar extends StatelessWidget {
     double totalCostOfWeek = 0;
     for (int i = 0; i < snapshot.data.docs.length; i++) {
       Timestamp gatheredDate = snapshot.data.docs[i].get('addingDate');
-      if (DateFormat.QQQ().format(gatheredDate.toDate()) == selectedWeek) {
+      if (currentWeekOfMonthCalculator(gatheredDate.toDate()) == selectedWeek) {
         totalCostOfWeek += snapshot.data.docs[i].get('expenseCost');
       }
     }
     return totalCostOfWeek;
+  }
+
+  String currentWeekOfMonthCalculator(DateTime date) {
+    var currentWeeknum;
+    print(8 / 7);
+    var weeknum = date.day / 7;
+    if (weeknum > 0 && weeknum <= 1) {
+      currentWeeknum = 1;
+    } else if (weeknum > 1 && weeknum <= 2) {
+      currentWeeknum = 2;
+    } else if (weeknum > 2 && weeknum <= 3) {
+      currentWeeknum = 3;
+    } else if (weeknum > 3 && weeknum <= 4) {
+      currentWeeknum = 4;
+    } else {
+      currentWeeknum = 4;
+    }
+    print('calculated week: W$currentWeeknum');
+    return 'W$currentWeeknum';
   }
 }

@@ -102,7 +102,7 @@ class _ExpenseListState extends State<ExpenseList> {
     for (int i = 0; i < snapshot.data.docs.length; i++) {
       Timestamp addingDate = snapshot.data.docs[i].get('addingDate');
       if (addingDate.toDate().weekday == selectedDay &&
-          DateFormat.QQQ().format(addingDate.toDate()) == selectedWeek) {
+          currentWeekOfMonthCalculator(addingDate.toDate()) == selectedWeek) {
         list.add(Expenses(
           cost: snapshot.data.docs[i].get('expenseCost'),
           date: addingDate.toDate(),
@@ -113,5 +113,23 @@ class _ExpenseListState extends State<ExpenseList> {
       }
     }
     return isSuccessful ? list : [Expenses(id: null)];
+  }
+
+  String currentWeekOfMonthCalculator(DateTime date) {
+    var currentWeeknum;
+    var weeknum = date.day / 7;
+    if (weeknum > 0 && weeknum < 1) {
+      currentWeeknum = 1;
+    } else if (weeknum > 1 && weeknum < 2) {
+      currentWeeknum = 2;
+    } else if (weeknum > 2 && weeknum < 3) {
+      currentWeeknum = 3;
+    } else if (weeknum > 3 && weeknum < 4) {
+      currentWeeknum = 4;
+    } else {
+      currentWeeknum = 4;
+    }
+    print('calculated week: W$currentWeeknum');
+    return 'W$currentWeeknum';
   }
 }

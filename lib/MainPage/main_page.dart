@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economiser/AnalyzingPage/AnalyzeShowcase.dart';
 import 'package:economiser/PopUps/add_budget.dart';
 import 'package:economiser/PopUps/add_expense.dart';
+import 'package:economiser/PopUps/logout_verification.dart';
 import 'package:economiser/PopUps/set_income_dialog.dart';
 import 'package:economiser/PopUps/show_budget_warning_dialog.dart';
-import 'package:economiser/SettingsPage/Settings.dart';
+import 'package:economiser/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import './app_label.dart';
@@ -243,13 +244,17 @@ class _MainPageState extends State<MainPage> {
                   //Settings Button
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SettingsPage(),
-                          ));
+                      showDialog(
+                              context: context,
+                              builder: (context) => LogoutVerificationDialog())
+                          .then((value) {
+                        if (value == true) {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) => MyApp()));
+                        }
+                      });
                     },
-                    child: const Text('Settings'),
+                    child: FittedBox(child: const Text('Logout')),
                     style: TextButton.styleFrom(
                         primary: Colors.black,
                         backgroundColor: Colors.amber,
@@ -269,3 +274,23 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
+
+
+/*  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SettingsPage(),
+                          ));
+                    },
+                    child: const Text('Settings'),
+                    style: TextButton.styleFrom(
+                        primary: Colors.black,
+                        backgroundColor: Colors.amber,
+                        shape: const BeveledRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(14)),
+                        ),
+                        textStyle: TextStyle(fontSize: maxHeight * 0.0306),
+                        fixedSize: Size(maxWidth * 0.4629, maxHeight * 0.0612)),
+                  ), */
