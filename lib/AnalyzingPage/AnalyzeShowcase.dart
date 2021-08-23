@@ -28,10 +28,10 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
 
   @override
   void initState() {
-    // print(currentTime.startOfWeek);
+
     print(currentTime.getWeek);
     selectedDay = currentTime.weekday;
-    // selectedWeek = 'W${currentWeekOfMonthCalculator()}';
+
     super.initState();
   }
 
@@ -59,12 +59,6 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
       dayIsSelected = true;
     });
   }
-
-  // void currentSelectedWeek(String week) {
-  //   setState(() {
-  //     selectedWeek = week;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

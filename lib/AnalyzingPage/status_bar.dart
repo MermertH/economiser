@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class StatusBar extends StatelessWidget {
   final int index;
@@ -82,24 +81,4 @@ class StatusBar extends StatelessWidget {
     }
     return totalCostOfMonth;
   }
-
-  // String currentWeekOfMonthCalculator(DateTime date) {
-  //   var currentWeeknum;
-  //   var weeknum = date.day / 7;
-  //   if (weeknum > 0 && weeknum <= 1) {
-  //     currentWeeknum = 1;
-  //   } else if (weeknum > 1 && weeknum <= 2) {
-  //     currentWeeknum = 2;
-  //   } else if (weeknum > 2 && weeknum <= 3) {
-  //     currentWeeknum = 3;
-  //   } else if (weeknum > 3 && weeknum <= 4) {
-  //     currentWeeknum = 4;
-  //   } else {
-  //     currentWeeknum = 4;
-  //   }
-  //   // print('calculated week: W$currentWeeknum');
-  //   // print('calculated day: ${date.day}');
-  //   // print('day name ${DateFormat.E().format(date)}');
-  //   return 'W$currentWeeknum';
-  // }
 }

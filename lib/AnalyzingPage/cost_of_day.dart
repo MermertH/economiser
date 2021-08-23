@@ -108,22 +108,4 @@ class _CostOfDayState extends State<CostOfDay> {
     }
     return totalCost.toString();
   }
-
-  // String currentWeekOfMonthCalculator(DateTime date) {
-  //   var currentWeeknum;
-  //   var weeknum = date.day / 7;
-  //   if (weeknum > 0 && weeknum <= 1) {
-  //     currentWeeknum = 1;
-  //   } else if (weeknum > 1 && weeknum <= 2) {
-  //     currentWeeknum = 2;
-  //   } else if (weeknum > 2 && weeknum <= 3) {
-  //     currentWeeknum = 3;
-  //   } else if (weeknum > 3 && weeknum <= 4) {
-  //     currentWeeknum = 4;
-  //   } else {
-  //     currentWeeknum = 4;
-  //   }
-  //   // print('calculated week: W$currentWeeknum');
-  //   return 'W$currentWeeknum';
-  // }
 }
