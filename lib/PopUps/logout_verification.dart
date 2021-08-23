@@ -47,6 +47,7 @@ class LogoutVerificationDialog extends StatelessWidget {
                       ), //10
                       child: Text(
                         'Are you sure that you want to logout?',
+                        textAlign: TextAlign.center,
                         style: TextStyle(fontSize: maxHeight * 0.0220),
                       ),
                     )),
