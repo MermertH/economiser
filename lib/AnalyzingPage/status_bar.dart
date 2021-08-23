@@ -5,10 +5,10 @@ import 'package:intl/intl.dart';
 
 class StatusBar extends StatelessWidget {
   final int index;
-  final String selectedWeek;
+  // final String selectedWeek;
   StatusBar(
     this.index,
-    this.selectedWeek,
+    // this.selectedWeek,
   );
   final _userAuth = FirebaseAuth.instance.currentUser;
   final CollectionReference expenses =
@@ -43,8 +43,7 @@ class StatusBar extends StatelessWidget {
                     ),
                   ),
                   FractionallySizedBox(
-                    heightFactor:
-                        1 - showGraphic(snapshot, index, selectedWeek),
+                    heightFactor: 1 - showGraphic(snapshot, index),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -58,51 +57,49 @@ class StatusBar extends StatelessWidget {
     );
   }
 
-  double showGraphic(AsyncSnapshot<QuerySnapshot<Object>> snapshot, int index,
-      String selectedWeek) {
+  double showGraphic(
+    AsyncSnapshot<QuerySnapshot<Object>> snapshot,
+    int index,
+  ) {
     double totalCostOfDay = 0;
     for (int i = 0; i < snapshot.data.docs.length; i++) {
       Timestamp gatheredDate = snapshot.data.docs[i].get('addingDate');
-      if (currentWeekOfMonthCalculator(gatheredDate.toDate()) == selectedWeek &&
-          gatheredDate.toDate().weekday == (index + 1)) {
+      if (gatheredDate.toDate().weekday == (index + 1)) {
         totalCostOfDay += snapshot.data.docs[i].get('expenseCost');
       }
     }
-    if (totalCostOfCurrentWeek(snapshot, selectedWeek) == 0) {
+    if (getTheCostOfTheMonth(snapshot) == 0) {
       return 0.0;
     } else {
-      return totalCostOfDay / totalCostOfCurrentWeek(snapshot, selectedWeek);
+      return totalCostOfDay / getTheCostOfTheMonth(snapshot);
     }
   }
 
-  double totalCostOfCurrentWeek(
-      AsyncSnapshot<QuerySnapshot<Object>> snapshot, String selectedWeek) {
-    double totalCostOfWeek = 0;
+  double getTheCostOfTheMonth(AsyncSnapshot<QuerySnapshot<Object>> snapshot) {
+    double totalCostOfMonth = 0;
     for (int i = 0; i < snapshot.data.docs.length; i++) {
-      Timestamp gatheredDate = snapshot.data.docs[i].get('addingDate');
-      if (currentWeekOfMonthCalculator(gatheredDate.toDate()) == selectedWeek) {
-        totalCostOfWeek += snapshot.data.docs[i].get('expenseCost');
-      }
+      totalCostOfMonth += snapshot.data.docs[i].get('expenseCost');
     }
-    return totalCostOfWeek;
+    return totalCostOfMonth;
   }
 
-  String currentWeekOfMonthCalculator(DateTime date) {
-    var currentWeeknum;
-    print(8 / 7);
-    var weeknum = date.day / 7;
-    if (weeknum > 0 && weeknum <= 1) {
-      currentWeeknum = 1;
-    } else if (weeknum > 1 && weeknum <= 2) {
-      currentWeeknum = 2;
-    } else if (weeknum > 2 && weeknum <= 3) {
-      currentWeeknum = 3;
-    } else if (weeknum > 3 && weeknum <= 4) {
-      currentWeeknum = 4;
-    } else {
-      currentWeeknum = 4;
-    }
-    print('calculated week: W$currentWeeknum');
-    return 'W$currentWeeknum';
-  }
+  // String currentWeekOfMonthCalculator(DateTime date) {
+  //   var currentWeeknum;
+  //   var weeknum = date.day / 7;
+  //   if (weeknum > 0 && weeknum <= 1) {
+  //     currentWeeknum = 1;
+  //   } else if (weeknum > 1 && weeknum <= 2) {
+  //     currentWeeknum = 2;
+  //   } else if (weeknum > 2 && weeknum <= 3) {
+  //     currentWeeknum = 3;
+  //   } else if (weeknum > 3 && weeknum <= 4) {
+  //     currentWeeknum = 4;
+  //   } else {
+  //     currentWeeknum = 4;
+  //   }
+  //   // print('calculated week: W$currentWeeknum');
+  //   // print('calculated day: ${date.day}');
+  //   // print('day name ${DateFormat.E().format(date)}');
+  //   return 'W$currentWeeknum';
+  // }
 }

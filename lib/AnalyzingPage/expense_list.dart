@@ -1,15 +1,13 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:intl/intl.dart';
 import './expenses.dart';
 import 'package:flutter/material.dart';
 import './ListItems.dart';
 
 class ExpenseList extends StatefulWidget {
   final int selectedDay;
-  final String selectedWeek;
-  ExpenseList(this.selectedDay, this.selectedWeek);
+  ExpenseList(this.selectedDay);
   @override
   _ExpenseListState createState() => _ExpenseListState();
 }
@@ -59,8 +57,8 @@ class _ExpenseListState extends State<ExpenseList> {
                     ),
                   );
                 }
-                currentList = selectedExpenses(
-                    expenseSnapshot, widget.selectedDay, widget.selectedWeek);
+                currentList =
+                    selectedExpenses(expenseSnapshot, widget.selectedDay);
 
                 return ListView.builder(
                     itemCount: currentList.length,
@@ -95,14 +93,13 @@ class _ExpenseListState extends State<ExpenseList> {
     );
   }
 
-  List<Expenses> selectedExpenses(AsyncSnapshot<QuerySnapshot<Object>> snapshot,
-      int selectedDay, String selectedWeek) {
+  List<Expenses> selectedExpenses(
+      AsyncSnapshot<QuerySnapshot<Object>> snapshot, int selectedDay) {
     List<Expenses> list = [];
     isSuccessful = false;
     for (int i = 0; i < snapshot.data.docs.length; i++) {
       Timestamp addingDate = snapshot.data.docs[i].get('addingDate');
-      if (addingDate.toDate().weekday == selectedDay &&
-          currentWeekOfMonthCalculator(addingDate.toDate()) == selectedWeek) {
+      if (addingDate.toDate().weekday == selectedDay) {
         list.add(Expenses(
           cost: snapshot.data.docs[i].get('expenseCost'),
           date: addingDate.toDate(),
@@ -115,21 +112,21 @@ class _ExpenseListState extends State<ExpenseList> {
     return isSuccessful ? list : [Expenses(id: null)];
   }
 
-  String currentWeekOfMonthCalculator(DateTime date) {
-    var currentWeeknum;
-    var weeknum = date.day / 7;
-    if (weeknum > 0 && weeknum < 1) {
-      currentWeeknum = 1;
-    } else if (weeknum > 1 && weeknum < 2) {
-      currentWeeknum = 2;
-    } else if (weeknum > 2 && weeknum < 3) {
-      currentWeeknum = 3;
-    } else if (weeknum > 3 && weeknum < 4) {
-      currentWeeknum = 4;
-    } else {
-      currentWeeknum = 4;
-    }
-    print('calculated week: W$currentWeeknum');
-    return 'W$currentWeeknum';
-  }
+  // String currentWeekOfMonthCalculator(DateTime date) {
+  //   var currentWeeknum;
+  //   var weeknum = date.day / 7;
+  //   if (weeknum > 0 && weeknum < 1) {
+  //     currentWeeknum = 1;
+  //   } else if (weeknum > 1 && weeknum < 2) {
+  //     currentWeeknum = 2;
+  //   } else if (weeknum > 2 && weeknum < 3) {
+  //     currentWeeknum = 3;
+  //   } else if (weeknum > 3 && weeknum < 4) {
+  //     currentWeeknum = 4;
+  //   } else {
+  //     currentWeeknum = 4;
+  //   }
+  //   // print('calculated week: W$currentWeeknum');
+  //   return 'W$currentWeeknum';
+  // }
 }

@@ -6,10 +6,8 @@ import 'package:intl/intl.dart';
 
 class CostOfDay extends StatefulWidget {
   final int index;
-  final String selectedWeek;
   CostOfDay(
     this.index,
-    this.selectedWeek,
   );
   @override
   State<CostOfDay> createState() => _CostOfDayState();
@@ -84,7 +82,6 @@ class _CostOfDayState extends State<CostOfDay> {
                           '${getTheCostOfDay(
                             snapshot,
                             widget.index,
-                            widget.selectedWeek,
                           )}\$',
                           style: TextStyle(
                               fontSize: maxHeight * 0.0196,
@@ -100,36 +97,33 @@ class _CostOfDayState extends State<CostOfDay> {
     );
   }
 
-  String getTheCostOfDay(AsyncSnapshot<QuerySnapshot<Object>> snapshot,
-      int index, String selectedWeek) {
+  String getTheCostOfDay(
+      AsyncSnapshot<QuerySnapshot<Object>> snapshot, int index) {
     var totalCost = 0;
     for (int i = 0; i < snapshot.data.docs.length; i++) {
       Timestamp gatheredDate = snapshot.data.docs[i].get('addingDate');
-      if (currentWeekOfMonthCalculator(gatheredDate.toDate()) ==
-              widget.selectedWeek &&
-          gatheredDate.toDate().weekday == (widget.index + 1)) {
+      if (gatheredDate.toDate().weekday == (widget.index + 1)) {
         totalCost += snapshot.data.docs[i].get('expenseCost');
       }
     }
     return totalCost.toString();
   }
 
-  String currentWeekOfMonthCalculator(DateTime date) {
-    var currentWeeknum;
-    print(8 / 7);
-    var weeknum = date.day / 7;
-    if (weeknum > 0 && weeknum <= 1) {
-      currentWeeknum = 1;
-    } else if (weeknum > 1 && weeknum <= 2) {
-      currentWeeknum = 2;
-    } else if (weeknum > 2 && weeknum <= 3) {
-      currentWeeknum = 3;
-    } else if (weeknum > 3 && weeknum <= 4) {
-      currentWeeknum = 4;
-    } else {
-      currentWeeknum = 4;
-    }
-    print('calculated week: W$currentWeeknum');
-    return 'W$currentWeeknum';
-  }
+  // String currentWeekOfMonthCalculator(DateTime date) {
+  //   var currentWeeknum;
+  //   var weeknum = date.day / 7;
+  //   if (weeknum > 0 && weeknum <= 1) {
+  //     currentWeeknum = 1;
+  //   } else if (weeknum > 1 && weeknum <= 2) {
+  //     currentWeeknum = 2;
+  //   } else if (weeknum > 2 && weeknum <= 3) {
+  //     currentWeeknum = 3;
+  //   } else if (weeknum > 3 && weeknum <= 4) {
+  //     currentWeeknum = 4;
+  //   } else {
+  //     currentWeeknum = 4;
+  //   }
+  //   // print('calculated week: W$currentWeeknum');
+  //   return 'W$currentWeeknum';
+  // }
 }

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economiser/AnalyzingPage/cost_of_day.dart';
 import 'package:economiser/AnalyzingPage/selected_day.dart';
-import 'package:economiser/AnalyzingPage/selected_week.dart';
 import 'package:economiser/PopUps/informative_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import './status_bar.dart';
 import './expense_list.dart';
+import 'package:dart_date/dart_date.dart';
 
 class AnalyzeShowcase extends StatefulWidget {
   @override
@@ -23,33 +23,35 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
   final currentTime = DateTime.now();
   final currentJiffy = Jiffy();
   var selectedDay;
-  var selectedWeek;
+  // var selectedWeek;
   bool dayIsSelected = false;
 
   @override
   void initState() {
+    // print(currentTime.startOfWeek);
+    print(currentTime.getWeek);
     selectedDay = currentTime.weekday;
-    selectedWeek = 'W${currentWeekOfMonthCalculator()}';
+    // selectedWeek = 'W${currentWeekOfMonthCalculator()}';
     super.initState();
   }
 
-  int currentWeekOfMonthCalculator() {
-    var currentWeeknum;
-    var weeknum = currentTime.day / 7;
-    if (weeknum > 0 && weeknum <= 1) {
-      currentWeeknum = 1;
-    } else if (weeknum > 1 && weeknum <= 2) {
-      currentWeeknum = 2;
-    } else if (weeknum > 2 && weeknum <= 3) {
-      currentWeeknum = 3;
-    } else if (weeknum > 3 && weeknum <= 4) {
-      currentWeeknum = 4;
-    } else {
-      currentWeeknum = 4;
-    }
-    print('calculated week num: $currentWeeknum');
-    return currentWeeknum;
-  }
+  // int currentWeekOfMonthCalculator() {
+  //   var currentWeeknum;
+  //   var weeknum = currentTime.day / 7;
+  //   if (weeknum > 0 && weeknum <= 1) {
+  //     currentWeeknum = 1;
+  //   } else if (weeknum > 1 && weeknum <= 2) {
+  //     currentWeeknum = 2;
+  //   } else if (weeknum > 2 && weeknum <= 3) {
+  //     currentWeeknum = 3;
+  //   } else if (weeknum > 3 && weeknum <= 4) {
+  //     currentWeeknum = 4;
+  //   } else {
+  //     currentWeeknum = 4;
+  //   }
+  //   // print('calculated week num: $currentWeeknum');
+  //   return currentWeeknum;
+  // }
 
   void currentSelectedDay(int day) {
     setState(() {
@@ -58,11 +60,11 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
     });
   }
 
-  void currentSelectedWeek(String week) {
-    setState(() {
-      selectedWeek = week;
-    });
-  }
+  // void currentSelectedWeek(String week) {
+  //   setState(() {
+  //     selectedWeek = week;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -76,11 +78,11 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
           style: TextStyle(fontSize: maxHeight * 0.0294),
         ),
         centerTitle: true,
-        actions: [
-          //PopUpMenus.
-          SelectedWeek(selectedWeek: currentSelectedWeek),
-          // SelectedMonth(selectedMonth: currentSelectedMonth),
-        ],
+        // actions: [
+        //   //PopUpMenus.
+        //   SelectedWeek(selectedWeek: currentSelectedWeek),
+        //   // SelectedMonth(selectedMonth: currentSelectedMonth),
+        // ],
       ),
       body: Column(
         children: [
@@ -113,7 +115,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                                       currentTime.month,
                                       DateTime.monday + selectedDay,
                                     ))}, " +
-                                  "$selectedWeek, " +
+                                  "${currentTime.getDate}, " +
                                   "${DateFormat.MMMM().format(currentTime)}",
                               style: TextStyle(fontSize: maxHeight * 0.0220),
                             ),
@@ -161,8 +163,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                       color: Colors.white,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: List.generate(
-                            7, (index) => StatusBar(index, selectedWeek)),
+                        children: List.generate(7, (index) => StatusBar(index)),
                       ),
                     ),
                     Container(
@@ -172,8 +173,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: List.generate(
-                          7, (index) => CostOfDay(index, selectedWeek)),
+                      children: List.generate(7, (index) => CostOfDay(index)),
                     ),
                   ],
                 ),
@@ -227,7 +227,6 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                             context: context,
                             builder: (context) => InformativeDialog());
                         print('selected day is $selectedDay');
-                        print('selected week is $selectedWeek');
                         print('max width: $maxWidth');
                         print('max height: $maxHeight');
                       },
@@ -243,7 +242,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
               ),
             ),
           ),
-          ExpenseList(selectedDay, selectedWeek),
+          ExpenseList(selectedDay),
         ],
       ),
     );
