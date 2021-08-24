@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class SetIncomeDialog extends StatefulWidget {
   @override
@@ -121,24 +122,67 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
               ],
             ),
             Spacer(),
-            TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  primary: Colors.black,
-                  shape: BeveledRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(14),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.orange,
+                      primary: Colors.black,
+                      shape: BeveledRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(14),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                onPressed: () => _selectDate(context),
-                child: FittedBox(
-                    child: Text(
-                  'Salary Date',
-                  style: TextStyle(
-                    fontSize: maxHeight * 0.0196,
-                  ),
-                ))),
+                    onPressed: () => _selectDate(context),
+                    child: FittedBox(
+                        child: Text(
+                      'Salary Date',
+                      style: TextStyle(
+                        fontSize: maxHeight * 0.0196,
+                      ),
+                    ))),
+                StreamBuilder<QuerySnapshot>(
+                    stream: _incomes.snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('error');
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Container(
+                          width: maxWidth * 0.2314,
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(color: Colors.black),
+                            ),
+                          ),
+                          child: Text(
+                            '...Loading...',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: maxHeight * 0.0196),
+                          ),
+                        );
+                      }
+
+                      return FittedBox(
+                        child: Container(
+                          width: maxWidth * 0.2314,
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(color: Colors.black),
+                            ),
+                          ),
+                          child: Text(
+                            '${DateFormat.yMd().format(getUsersSalaryDate(snapshot))}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: maxHeight * 0.0196),
+                          ),
+                        ),
+                      );
+                    }),
+              ],
+            ),
             Spacer(),
             StreamBuilder<QuerySnapshot>(
               stream: _incomes.snapshots(),
@@ -205,5 +249,16 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
         ),
       ),
     );
+  }
+
+  DateTime getUsersSalaryDate(AsyncSnapshot<QuerySnapshot<Object>> snapshot) {
+    if (snapshot.data.docs.any((doc) => doc.id == _userAuth.uid) != false) {
+      Timestamp userSalaryDate = snapshot.data.docs
+          .firstWhere((doc) => doc.id == _userAuth.uid)
+          .get('addingDate');
+      return userSalaryDate.toDate();
+    } else {
+      return DateTime.now();
+    }
   }
 }

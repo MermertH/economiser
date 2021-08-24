@@ -61,6 +61,6 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return AuthenticationForm(_submitAuthForm, _isLoading);
+    return SafeArea(child: AuthenticationForm(_submitAuthForm, _isLoading));
   }
 }
