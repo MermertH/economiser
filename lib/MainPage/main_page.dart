@@ -226,7 +226,7 @@ class _MainPageState extends State<MainPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AnalyzeShowcase()));
+                              builder: (context) => AnalyzeShowcase(checkBudgetWarning)));
                     },
                     child: Text(
                       'Analyze Showcase',

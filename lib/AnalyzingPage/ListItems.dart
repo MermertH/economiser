@@ -1,4 +1,5 @@
 import 'package:economiser/AnalyzingPage/expenses.dart';
+import 'package:economiser/PopUps/edit_expense_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -50,6 +51,11 @@ class ListItems extends StatelessWidget {
             child: ListTile(
               onTap: () {
                 print('id of this expense is ${selectedExpenses[index].id}');
+                showDialog(
+                    context: context,
+                    builder: (context) => EditExpenseDialog(selectedExpenses[index].id,
+                        selectedExpenses[index].title,
+                        selectedExpenses[index].cost,));
               },
               title: Text(
                 selectedExpenses[index].title,

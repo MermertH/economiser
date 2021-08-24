@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economiser/AnalyzingPage/cost_of_day.dart';
 import 'package:economiser/AnalyzingPage/selected_day.dart';
+import 'package:economiser/PopUps/add_expense.dart';
 import 'package:economiser/PopUps/informative_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,8 @@ import './expense_list.dart';
 import 'package:dart_date/dart_date.dart';
 
 class AnalyzeShowcase extends StatefulWidget {
+  final Function warningCheck;
+  AnalyzeShowcase(this.warningCheck);
   @override
   State<AnalyzeShowcase> createState() => _AnalyzeShowcaseState();
 }
@@ -28,30 +31,10 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
 
   @override
   void initState() {
-
     print(currentTime.getWeek);
     selectedDay = currentTime.weekday;
-
     super.initState();
   }
-
-  // int currentWeekOfMonthCalculator() {
-  //   var currentWeeknum;
-  //   var weeknum = currentTime.day / 7;
-  //   if (weeknum > 0 && weeknum <= 1) {
-  //     currentWeeknum = 1;
-  //   } else if (weeknum > 1 && weeknum <= 2) {
-  //     currentWeeknum = 2;
-  //   } else if (weeknum > 2 && weeknum <= 3) {
-  //     currentWeeknum = 3;
-  //   } else if (weeknum > 3 && weeknum <= 4) {
-  //     currentWeeknum = 4;
-  //   } else {
-  //     currentWeeknum = 4;
-  //   }
-  //   // print('calculated week num: $currentWeeknum');
-  //   return currentWeeknum;
-  // }
 
   void currentSelectedDay(int day) {
     setState(() {
@@ -66,17 +49,28 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
     final maxHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.grey[800],
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           'Analyze Showcase',
           style: TextStyle(fontSize: maxHeight * 0.0294),
         ),
         centerTitle: true,
-        // actions: [
-        //   //PopUpMenus.
-        //   SelectedWeek(selectedWeek: currentSelectedWeek),
-        //   // SelectedMonth(selectedMonth: currentSelectedMonth),
-        // ],
+        actions: [
+          IconButton(
+            tooltip: 'Add Expense',
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => AddExpenseDialog()).then((value) {
+                if (value == true) {
+                  widget.warningCheck();
+                }
+              });
+            },
+            icon: Icon(Icons.add),
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -210,7 +204,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                     child: TextButton(
                       style: TextButton.styleFrom(
                         shape: const CircleBorder(),
-                        backgroundColor: Colors.orange,
+                        backgroundColor: Colors.red,
                         primary: Colors.black,
                         textStyle: TextStyle(
                           fontSize: maxHeight * 0.0367,
