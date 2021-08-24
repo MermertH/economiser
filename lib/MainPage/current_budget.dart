@@ -15,6 +15,7 @@ class _CurrentBudgetState extends State<CurrentBudget> {
       FirebaseFirestore.instance.collection('Budget');
   CollectionReference income = FirebaseFirestore.instance.collection('Income');
   var _userAuth = FirebaseAuth.instance.currentUser;
+  var datetime = new Jiffy();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,8 @@ class _CurrentBudgetState extends State<CurrentBudget> {
                 ),
                 child: Center(
                     child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: maxWidth * 0.0231), //10
+                  padding:
+                      EdgeInsets.symmetric(horizontal: maxWidth * 0.0231), //10
                   child: StreamBuilder<QuerySnapshot>(
                     stream: income.snapshots(),
                     builder: (context, incomeSnapshot) {
@@ -106,41 +108,62 @@ class _CurrentBudgetState extends State<CurrentBudget> {
   }
 
   Future<void> monthlyIncome(
-      AsyncSnapshot<QuerySnapshot<Object>> budgetSnapshot,
-      CollectionReference<Object> income,
-      AsyncSnapshot<QuerySnapshot<Object>> incomeSnapshot) async {
+    AsyncSnapshot<QuerySnapshot<Object>> budgetSnapshot,
+    CollectionReference<Object> income,
+    AsyncSnapshot<QuerySnapshot<Object>> incomeSnapshot,
+  ) async {
     Timestamp addingDate = await income.get().then((querySnapshot) {
       return querySnapshot.docs
           .firstWhere((doc) => doc.id == _userAuth.uid)
           .get('monthlySalaryDate');
     });
+    // add income to budget if salary date is selected in incoming days.
+    if (addingDate.toDate().isAfter(datetime.dateTime)) {
+      print('current date is behing of salary date');
+      if (addingDate.toDate().difference(datetime.dateTime).isNegative) {
+        updateIncome(addingDate);
+      } else {
+        print(
+            'time left for upcoming salary date: ${addingDate.toDate().difference(datetime.dateTime)}');
+      }
+    } else {
+      print('current date is not behing of salary date');
+    }
+    // add income to budget after next month arrives.
     print('current date: ${Jiffy().dateTime}');
-    //print(Jiffy(addingDate.toDate()).add(minutes: 28).dateTime);
-    print(
-        'time left for salary date: ${Jiffy(addingDate.toDate()).add(months: 1).dateTime.difference(Jiffy().dateTime)}');
-
+    print('time left for salary date: ${Jiffy(
+      addingDate.toDate(),
+    ).add(
+          months: 1,
+        ).dateTime.difference(
+          Jiffy().dateTime,
+        )}');
     if (Jiffy(addingDate.toDate())
         .add(months: 1)
         .dateTime
         .difference(Jiffy().dateTime)
         .isNegative) {
-      income.doc(_userAuth.uid).update({
-        'monthlySalaryDate': Jiffy(addingDate.toDate()).add(months: 1).dateTime,
-      });
-      budgetRefference.doc(_userAuth.uid).update({
-        'currentBudget':
-            FieldValue.increment(await income.get().then((querySnapshot) {
-          return querySnapshot.docs
-              .firstWhere((doc) => doc.id == _userAuth.uid)
-              .get('income');
-        })),
-        'extraBudgetAddingDate': DateTime.now(),
-      });
-      print('Income is added Successfully');
-      showDialog(
-        context: context,
-        builder: (context) => SalaryAddedDialog(),
-      );
+      updateIncome(addingDate);
     }
+  }
+
+  void updateIncome(Timestamp addingDate) async {
+    income.doc(_userAuth.uid).update({
+      'monthlySalaryDate': Jiffy(addingDate.toDate()).add(months: 1).dateTime,
+    });
+    budgetRefference.doc(_userAuth.uid).update({
+      'currentBudget':
+          FieldValue.increment(await income.get().then((querySnapshot) {
+        return querySnapshot.docs
+            .firstWhere((doc) => doc.id == _userAuth.uid)
+            .get('income');
+      })),
+      'extraBudgetAddingDate': DateTime.now(),
+    });
+    print('Income is added Successfully');
+    showDialog(
+      context: context,
+      builder: (context) => SalaryAddedDialog(),
+    );
   }
 }
