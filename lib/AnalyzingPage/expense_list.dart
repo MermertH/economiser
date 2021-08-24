@@ -57,8 +57,8 @@ class _ExpenseListState extends State<ExpenseList> {
                     ),
                   );
                 }
-                currentList =
-                    selectedExpenses(expenseSnapshot, widget.selectedDay);
+                currentList = orderListByDate(
+                    selectedExpenses(expenseSnapshot, widget.selectedDay));
 
                 return ListView.builder(
                     itemCount: currentList.length,
@@ -110,5 +110,13 @@ class _ExpenseListState extends State<ExpenseList> {
       }
     }
     return isSuccessful ? list : [Expenses(id: null)];
+  }
+
+  List<Expenses> orderListByDate(List<Expenses> list) {
+    list.sort((a, b) {
+      return a.date.compareTo(b.date);
+    });
+
+    return list.reversed.toList();
   }
 }
