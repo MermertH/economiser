@@ -20,6 +20,7 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
 
   // selected salary date.
   DateTime selectedDate = DateTime.now();
+  bool isPicked = false;
 
   //DatePicker to select salary date.
   Future<void> _selectDate(BuildContext context) async {
@@ -31,6 +32,7 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
+        isPicked = true;
       });
   }
 
@@ -174,7 +176,9 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
                             ),
                           ),
                           child: Text(
-                            '${DateFormat.yMd().format(getUsersSalaryDate(snapshot))}',
+                            isPicked == true
+                                ? '${DateFormat.yMd().format(selectedDate)} selected date'
+                                : '${DateFormat.yMd().format(getUsersSalaryDate(snapshot))} selected date',
                             textAlign: TextAlign.center,
                             style: TextStyle(fontSize: maxHeight * 0.0196),
                           ),
@@ -256,8 +260,10 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
       Timestamp userSalaryDate = snapshot.data.docs
           .firstWhere((doc) => doc.id == _userAuth.uid)
           .get('addingDate');
+      print('entered here to get salary date');
       return userSalaryDate.toDate();
     } else {
+      print('entered Datetime now');
       return DateTime.now();
     }
   }
