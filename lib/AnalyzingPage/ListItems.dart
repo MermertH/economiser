@@ -53,9 +53,12 @@ class ListItems extends StatelessWidget {
                 print('id of this expense is ${selectedExpenses[index].id}');
                 showDialog(
                     context: context,
-                    builder: (context) => EditExpenseDialog(selectedExpenses[index].id,
-                        selectedExpenses[index].title,
-                        selectedExpenses[index].cost,));
+                    builder: (context) => EditExpenseDialog(
+                          selectedExpenses[index].id,
+                          selectedExpenses[index].title,
+                          selectedExpenses[index].cost,
+                          selectedExpenses[index].date,
+                        ));
               },
               title: Text(
                 selectedExpenses[index].title,

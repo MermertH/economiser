@@ -6,8 +6,13 @@ class EditExpenseDialog extends StatefulWidget {
   final String selectedExpenseID;
   final String selectedExpenseTitle;
   final int selectedExpenseCost;
-  EditExpenseDialog(this.selectedExpenseID, this.selectedExpenseTitle,
-      this.selectedExpenseCost);
+  final DateTime selectedExpenseDate;
+  EditExpenseDialog(
+    this.selectedExpenseID,
+    this.selectedExpenseTitle,
+    this.selectedExpenseCost,
+    this.selectedExpenseDate,
+  );
 
   @override
   State<EditExpenseDialog> createState() => _EditExpenseDialogState();
@@ -228,6 +233,7 @@ class _EditExpenseDialogState extends State<EditExpenseDialog> {
                                       .set({
                                     'expenseName': expenseName,
                                     'expenseCost': expenseCost,
+                                    'addingDate': widget.selectedExpenseDate,
                                   });
 
                                   if (expenseCost ==
