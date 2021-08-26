@@ -120,31 +120,32 @@ class _CurrentBudgetState extends State<CurrentBudget> {
     // add income to budget if salary date is selected in incoming days.
     if (addingDate.toDate().isAfter(datetime.dateTime)) {
       print('current date is behing of salary date');
-      if (addingDate.toDate().difference(datetime.dateTime).isNegative) {
-        updateIncome(addingDate);
-      } else {
-        print(
-            'time left for upcoming salary date: ${addingDate.toDate().difference(datetime.dateTime)}');
-      }
+      print(
+          'time left for upcoming salary date: ${addingDate.toDate().difference(datetime.dateTime)}');
     } else {
       print('current date is not behing of salary date');
     }
-    // add income to budget after next month arrives.
-    print('current date: ${Jiffy().dateTime}');
-    print('time left for salary date: ${Jiffy(
-      addingDate.toDate(),
-    ).add(
-          months: 1,
-        ).dateTime.difference(
-          Jiffy().dateTime,
-        )}');
-    if (Jiffy(addingDate.toDate())
-        .add(months: 1)
-        .dateTime
-        .difference(Jiffy().dateTime)
-        .isNegative) {
-      updateIncome(addingDate);
+    if (addingDate.toDate().isBefore(datetime.dateTime)) {
+      if (addingDate.toDate().difference(datetime.dateTime).isNegative) {
+        updateIncome(addingDate);
+      }
     }
+    // // add income to budget after next month arrives.
+    // print('current date: ${Jiffy().dateTime}');
+    // print('time left for salary date: ${Jiffy(
+    //   addingDate.toDate(),
+    // ).add(
+    //       months: 1,
+    //     ).dateTime.difference(
+    //       Jiffy().dateTime,
+    //     )}');
+    // if (Jiffy(addingDate.toDate())
+    //     .add(months: 1)
+    //     .dateTime
+    //     .difference(Jiffy().dateTime)
+    //     .isNegative) {
+    //   updateIncome(addingDate);
+    // }
   }
 
   void updateIncome(Timestamp addingDate) async {
