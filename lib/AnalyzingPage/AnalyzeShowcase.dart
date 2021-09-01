@@ -89,58 +89,61 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                   ),
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: maxHeight * 0.0171,
-                              horizontal: maxWidth * 0.0324,
-                            ), //14
-                            child: FittedBox(
-                              child: Text(
-                                "${dayIsSelected == false ? DateFormat.EEEE().format(currentTime) : DateFormat.EEEE().format(DateTime(
-                                        currentTime.year,
-                                        currentTime.month,
-                                        DateTime.monday + selectedDay,
-                                      ))}, " +
-                                    "${currentTime.getDate}, " +
-                                    "${DateFormat.MMMM().format(currentTime)}",
-                                style: TextStyle(fontSize: maxHeight * 0.0220),
+                      FittedBox(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: maxHeight * 0.0171,
+                                horizontal: maxWidth * 0.0324,
+                              ), //14
+                              child: FittedBox(
+                                child: Text(
+                                  "${dayIsSelected == false ? DateFormat.EEEE().format(currentTime) : DateFormat.EEEE().format(DateTime(
+                                          currentTime.year,
+                                          currentTime.month,
+                                          DateTime.monday + selectedDay,
+                                        ))}, " +
+                                      "${currentTime.getDate}, " +
+                                      "${DateFormat.MMMM().format(currentTime)}",
+                                  style:
+                                      TextStyle(fontSize: maxHeight * 0.0220),
+                                ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: maxHeight * 0.0171,
-                              horizontal: maxWidth * 0.0324,
-                            ), //14
-                            child: StreamBuilder<QuerySnapshot>(
-                                stream: expenseCosts
-                                    .doc(_userAuth.uid)
-                                    .collection('Expense')
-                                    .snapshots(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasError) {
-                                    return Text('Something went wrong');
-                                  }
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return FittedBox(
-                                      fit: BoxFit.cover,
-                                      clipBehavior: Clip.hardEdge,
-                                      child: Text('...Loading...'),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: maxHeight * 0.0171,
+                                horizontal: maxWidth * 0.0324,
+                              ), //14
+                              child: StreamBuilder<QuerySnapshot>(
+                                  stream: expenseCosts
+                                      .doc(_userAuth.uid)
+                                      .collection('Expense')
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Text('Something went wrong');
+                                    }
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return FittedBox(
+                                        fit: BoxFit.cover,
+                                        clipBehavior: Clip.hardEdge,
+                                        child: Text('...Loading...'),
+                                      );
+                                    }
+                                    return Text(
+                                      'Total Expense: ${getTheCostOfTheMonth(snapshot)}\$',
+                                      style: TextStyle(
+                                          fontSize: maxHeight * 0.0147,
+                                          fontWeight: FontWeight.bold),
                                     );
-                                  }
-                                  return Text(
-                                    'Total Expense: ${getTheCostOfTheMonth(snapshot)}\$',
-                                    style: TextStyle(
-                                        fontSize: maxHeight * 0.0147,
-                                        fontWeight: FontWeight.bold),
-                                  );
-                                }),
-                          ),
-                        ],
+                                  }),
+                            ),
+                          ],
+                        ),
                       ),
                       Container(
                         width: maxWidth,
