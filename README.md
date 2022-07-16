@@ -1,6 +1,6 @@
 # economiser
 
-A new Flutter project.
+A budget managing app that uses authorization and Google Firebase as database.
 
 ## Getting Started
 
