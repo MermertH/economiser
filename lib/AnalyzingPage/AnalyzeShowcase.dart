@@ -4,7 +4,6 @@ import 'package:economiser/AnalyzingPage/selected_day.dart';
 import 'package:economiser/PopUps/add_expense.dart';
 import 'package:economiser/PopUps/informative_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
@@ -210,7 +209,7 @@ class _AnalyzeShowcaseState extends State<AnalyzeShowcase> {
                         style: TextButton.styleFrom(
                           shape: const CircleBorder(),
                           backgroundColor: Colors.red,
-                          primary: Colors.black,
+                          foregroundColor: Colors.black,
                           textStyle: TextStyle(
                             fontSize: maxHeight * 0.0367,
                           ),

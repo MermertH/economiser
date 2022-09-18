@@ -147,7 +147,7 @@ class _MainPageState extends State<MainPage> {
                         },
                         child: const Text('Set Income'),
                         style: TextButton.styleFrom(
-                            primary: Colors.black,
+                            foregroundColor: Colors.black,
                             backgroundColor: Colors.amber,
                             shape: const BeveledRectangleBorder(
                               borderRadius:
@@ -181,7 +181,7 @@ class _MainPageState extends State<MainPage> {
                       },
                       child: const Text('Add Budget'),
                       style: TextButton.styleFrom(
-                          primary: Colors.black,
+                          foregroundColor: Colors.black,
                           backgroundColor: Colors.amber,
                           shape: const BeveledRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(14)),
@@ -216,7 +216,7 @@ class _MainPageState extends State<MainPage> {
                       },
                       child: const Text('Add Expense'),
                       style: TextButton.styleFrom(
-                          primary: Colors.black,
+                          foregroundColor: Colors.black,
                           backgroundColor: Colors.amber,
                           shape: const BeveledRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(14)),
@@ -239,7 +239,7 @@ class _MainPageState extends State<MainPage> {
                         textAlign: TextAlign.center,
                       ),
                       style: TextButton.styleFrom(
-                          primary: Colors.black,
+                          foregroundColor: Colors.black,
                           backgroundColor: Colors.amber,
                           shape: const BeveledRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(14)),
@@ -264,7 +264,7 @@ class _MainPageState extends State<MainPage> {
                       },
                       child: FittedBox(child: const Text('Logout')),
                       style: TextButton.styleFrom(
-                          primary: Colors.black,
+                          foregroundColor: Colors.black,
                           backgroundColor: Colors.amber,
                           shape: const BeveledRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(14)),

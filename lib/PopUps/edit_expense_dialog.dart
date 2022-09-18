@@ -194,7 +194,7 @@ class _EditExpenseDialogState extends State<EditExpenseDialog> {
                 TextButton(
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.amber,
-                    primary: Colors.black,
+                    foregroundColor: Colors.black,
                     shape: BeveledRectangleBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(14),
@@ -258,7 +258,7 @@ class _EditExpenseDialogState extends State<EditExpenseDialog> {
                               )),
                               style: TextButton.styleFrom(
                                 backgroundColor: Colors.amber,
-                                primary: Colors.black,
+                                foregroundColor: Colors.black,
                                 shape: BeveledRectangleBorder(
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(14),

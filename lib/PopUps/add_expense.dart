@@ -202,7 +202,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
                           )),
                           style: TextButton.styleFrom(
                             backgroundColor: Colors.amber,
-                            primary: Colors.black,
+                            foregroundColor: Colors.black,
                             shape: BeveledRectangleBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(14),

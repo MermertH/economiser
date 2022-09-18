@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class InformativeDialog extends StatelessWidget {
@@ -126,7 +125,7 @@ class InformativeDialog extends StatelessWidget {
               },
               style: TextButton.styleFrom(
                   backgroundColor: Colors.amberAccent,
-                  primary: Colors.black,
+                  foregroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   )),

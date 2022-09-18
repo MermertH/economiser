@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BudgetWarningDialog extends StatelessWidget {
@@ -57,7 +56,7 @@ class BudgetWarningDialog extends StatelessWidget {
               },
               style: TextButton.styleFrom(
                   backgroundColor: Colors.amber,
-                  primary: Colors.black,
+                  foregroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   )),

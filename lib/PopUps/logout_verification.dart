@@ -61,7 +61,7 @@ class LogoutVerificationDialog extends StatelessWidget {
                 Expanded(
                   child: TextButton(
                     style: TextButton.styleFrom(
-                        primary: Colors.black,
+                        foregroundColor: Colors.black,
                         textStyle: TextStyle(
                           fontSize: maxHeight * 0.0196,
                         ),
@@ -77,7 +77,7 @@ class LogoutVerificationDialog extends StatelessWidget {
                 Expanded(
                   child: TextButton(
                     style: TextButton.styleFrom(
-                        primary: Colors.black,
+                        foregroundColor: Colors.black,
                         textStyle: TextStyle(
                           fontSize: maxHeight * 0.0196,
                         ),

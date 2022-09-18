@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -130,7 +129,7 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
                 TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.orange,
-                      primary: Colors.black,
+                      foregroundColor: Colors.black,
                       shape: BeveledRectangleBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(14),
@@ -238,7 +237,7 @@ class _SetIncomeDialogState extends State<SetIncomeDialog> {
                   )),
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.amber,
-                    primary: Colors.black,
+                    foregroundColor: Colors.black,
                     shape: BeveledRectangleBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(14),
