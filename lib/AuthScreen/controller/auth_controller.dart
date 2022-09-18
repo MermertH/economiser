@@ -36,15 +36,17 @@ class AuthController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> submitAuthForm(
+  Future<bool> submitAuthForm(
     BuildContext context,
   ) async {
     try {
       setIsLoading = true;
       if (_isLogin) {
         await _authServices.authLogin(_userMail, _userPassword);
+        return true;
       } else {
         await _authServices.authRegister(_userMail, _userPassword);
+        return true;
       }
     } on FirebaseAuthException catch (err) {
       var message = 'An error occured, please check your credentials!';
@@ -58,21 +60,23 @@ class AuthController with ChangeNotifier {
         ),
       );
       setIsLoading = false;
+      return false;
     } catch (err) {
       print(err);
       setIsLoading = false;
+      return false;
     }
   }
 
-  void trySubmit(BuildContext context) {
+  Future<void> trySubmit(BuildContext context) async {
     final isValid = formKey.currentState.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
       formKey.currentState.save();
       print('Current accepted mail is $_userMail');
       print('Current accepted password is $_userPassword');
-      notifyListeners();
-      submitSuccessful(context);
+      await submitAuthForm(context)
+          .then((value) => value ? submitSuccessful(context) : null);
     }
     notifyListeners();
   }

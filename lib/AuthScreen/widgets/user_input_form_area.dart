@@ -98,8 +98,8 @@ class UserInputFormArea extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     clipBehavior: Clip.hardEdge,
                     child: InkWell(
-                      onTap: () {
-                        authProvider.trySubmit(context);
+                      onTap: () async {
+                        await authProvider.trySubmit(context);
                       },
                       child: Ink(
                         decoration: BoxDecoration(
